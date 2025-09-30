@@ -1,11 +1,9 @@
-import express from "express";
-import cors from "cors";
-import dotenv from "dotenv";
+const express = require("express");
+const cors = require("cors");
 
-dotenv.config();
+const { getEvents } = require("./controllers/eventsControllers");
 
 const app = express();
-const PORT = process.env.PORT || 4100;
 
 app.use(cors());
 
@@ -16,6 +14,6 @@ app.get("/", (req, res) => {
   res.send("Hello from Film Club API!");
 });
 
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+app.get("/api/events", getEvents);
+
+module.exports = app;
