@@ -64,3 +64,42 @@ describe("GET /api/events", () => {
       });
   });
 });
+describe("GET /api/events/:id", () => {
+  test("200: responds with a single event object when given a valid ID", () => {
+    return request(app)
+      .get("/api/events/1")
+      .expect(200)
+      .then(({ body }) => {
+        const { event } = body;
+        console.log(body);
+        expect(body.event).toHaveProperty("id");
+        expect(body.event).toHaveProperty("title");
+        expect(event.title).toBe("Drive (discussion)");
+        expect(event.date).toBe("2026-01-03T00:00:00.000Z");
+        expect(event.start_time).toBe("19:00:00");
+        expect(event.end_time).toBe("20:00:00");
+        expect(event.location).toBe("The Rising Sun");
+        expect(event.film_title).toBe("Drive");
+        expect(event.film_director).toBe("Nicolas Winding Refn");
+        expect(event.film_year).toBe(2011);
+      });
+  });
+
+  test("404: responds with not found for non-existent event ID", () => {
+    return request(app)
+      .get("/api/events/9999")
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Event not found");
+      });
+  });
+
+  test("400: responds with bad request for invalid ID type", () => {
+    return request(app)
+      .get("/api/events/not-a-number")
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Bad request");
+      });
+  });
+});
