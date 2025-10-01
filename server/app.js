@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 
 const { getEvents, getEventById } = require("./controllers/eventsControllers");
-
+const { postSignup } = require("./controllers/signupsControllers");
 const app = express();
 
 app.use(cors());
@@ -17,6 +17,8 @@ app.get("/", (req, res) => {
 app.get("/api/events", getEvents);
 
 app.get("/api/events/:id", getEventById);
+
+app.post("/api/signups", postSignup);
 
 // custom errors from models
 app.use((err, request, response, next) => {
