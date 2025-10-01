@@ -147,3 +147,109 @@ describe("POST /api/signups", () => {
       });
   });
 });
+describe("POST /api/events", () => {
+  test("201: creates a new event, auto-generates title, and responds with the event object", () => {
+    const newEvent = {
+      date: "2026-06-15",
+      start_time: "19:00",
+      end_time: "22:00",
+      location: "Cube Microplex",
+      film_title: "Test Film",
+      film_director: "Jane Doe",
+      film_year: 2020,
+      film_img_url: "",
+      event_type: "screening",
+      price: 10,
+    };
+
+    return request(app)
+      .post("/api/events")
+      .send(newEvent)
+      .expect(201)
+      .then(({ body }) => {
+        const { event } = body;
+
+        // Title should be auto-generated
+        expect(event.title).toBe("Test Film (screening)");
+        expect(event.date).toContain("2026-06-15"); // instead of exact match
+        expect(event.start_time.startsWith("19:00")).toBe(true);
+        expect(event.end_time.startsWith("22:00")).toBe(true);
+        expect(event.location).toBe("Cube Microplex");
+        expect(event.film_title).toBe("Test Film");
+        expect(event.film_director).toBe("Jane Doe");
+        expect(event.film_year).toBe(2020);
+        expect(event.event_type).toBe("screening");
+        expect(Number(event.price)).toBe(10); // cast from string
+
+        // Generated fields
+        expect(event).toHaveProperty("id", expect.any(Number));
+        expect(event).toHaveProperty("created_at", expect.any(String));
+      });
+  });
+
+  test("400: responds with error when required fields are missing", () => {
+    const badEvent = {
+      // Missing date and other required fields
+      location: "Cube Microplex",
+      film_title: "Test Film",
+      film_director: "Jane Doe",
+      film_year: 2020,
+      event_type: "screening",
+      price: 10,
+    };
+
+    return request(app)
+      .post("/api/events")
+      .send(badEvent)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Missing required fields");
+      });
+  });
+
+  test("400: responds with error for invalid event_type", () => {
+    const badEvent = {
+      date: "2026-07-01",
+      start_time: "19:00",
+      end_time: "20:00",
+      location: "The Rising Sun",
+      film_title: "Fake Film",
+      film_director: "John Smith",
+      film_year: 2020,
+      film_img_url: "",
+      event_type: "party", // invalid
+      price: 0,
+    };
+
+    return request(app)
+      .post("/api/events")
+      .send(badEvent)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid event_type");
+      });
+  });
+
+  test("400: responds with error for invalid film_year", () => {
+    const badEvent = {
+      date: "2026-07-01",
+      start_time: "19:00",
+      end_time: "22:00",
+      location: "Watershed",
+      film_title: "Time Machine",
+      film_director: "Future Director",
+      film_year: 3000, // invalid year
+      film_img_url: "",
+      event_type: "screening",
+      price: 10,
+    };
+
+    return request(app)
+      .post("/api/events")
+      .send(badEvent)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid film_year");
+      });
+  });
+});
