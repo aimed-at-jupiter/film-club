@@ -10,7 +10,7 @@ const seed = ({ eventData, userData, signupData }) => {
       .then(() => {
         return db.query(`
         CREATE TABLE events (
-          id SERIAL PRIMARY KEY,
+          event_id SERIAL PRIMARY KEY,
           title TEXT NOT NULL,
           date DATE NOT NULL,
           start_time TIME NOT NULL,
@@ -29,9 +29,10 @@ const seed = ({ eventData, userData, signupData }) => {
       .then(() => {
         return db.query(`
         CREATE TABLE users (
-          id SERIAL PRIMARY KEY,
-          username TEXT NOT NULL,
+          user_id SERIAL PRIMARY KEY,
+          username TEXT UNIQUE NOT NULL,
           email TEXT UNIQUE NOT NULL,
+          password TEXT NOT NULL,
           role TEXT CHECK (role IN ('user', 'staff')) DEFAULT 'user'
         );
       `);
@@ -39,9 +40,9 @@ const seed = ({ eventData, userData, signupData }) => {
       .then(() => {
         return db.query(`
         CREATE TABLE signups (
-          id SERIAL PRIMARY KEY,
-          user_id INT REFERENCES users(id) ON DELETE CASCADE,
-          event_id INT REFERENCES events(id) ON DELETE CASCADE,
+          signup_id SERIAL PRIMARY KEY,
+          user_id INT REFERENCES users(user_id) ON DELETE CASCADE,
+          event_id INT REFERENCES events(event_id) ON DELETE CASCADE,
           created_at TIMESTAMP DEFAULT NOW(),
           UNIQUE(user_id, event_id)
         );
