@@ -7,6 +7,8 @@ const {
   postEvent,
 } = require("./controllers/eventsControllers");
 const { postSignup } = require("./controllers/signupsControllers");
+const { login } = require("./controllers/authControllers");
+
 const app = express();
 
 app.use(cors());
@@ -25,6 +27,8 @@ app.get("/api/events/:id", getEventById);
 app.post("/api/signups", postSignup);
 
 app.post("/api/events", postEvent);
+
+app.post("/api/auth/login", login);
 
 // custom errors from models
 app.use((err, request, response, next) => {

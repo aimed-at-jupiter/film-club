@@ -1,5 +1,8 @@
 const db = require("../connection");
+const bcrypt = require("bcrypt");
 const format = require("pg-format");
+
+const saltRounds = 10;
 
 const seed = ({ eventData, userData, signupData }) => {
   return (
@@ -91,16 +94,22 @@ const seed = ({ eventData, userData, signupData }) => {
       })
       // Insert users
       .then(() => {
-        const formattedUserValues = userData.map(
-          ({ username, email, role }) => [username, email, role]
-        );
+        // Hash passwords first
+        const hashedUserPromises = userData.map((user) => {
+          return bcrypt
+            .hash(user.password, saltRounds)
+            .then((hashedPassword) => {
+              return [user.username, user.email, hashedPassword, user.role];
+            });
+        });
 
-        const userSqlString = format(
-          `INSERT INTO users (username, email, role) VALUES %L RETURNING *;`,
-          formattedUserValues
-        );
-
-        return db.query(userSqlString);
+        return Promise.all(hashedUserPromises).then((formattedUserValues) => {
+          const userSqlString = format(
+            `INSERT INTO users (username, email, password, role) VALUES %L RETURNING *;`,
+            formattedUserValues
+          );
+          return db.query(userSqlString);
+        });
       })
       // Insert signups
       .then(() => {
