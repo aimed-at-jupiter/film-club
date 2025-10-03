@@ -43,7 +43,7 @@ const addEvent = (eventData) => {
     INSERT INTO events
     (title, date, start_time, end_time, location, film_title, film_director, film_year, film_img_url, event_type, price)
     VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
-    RETURNING id,
+    RETURNING event_id,
     title,
     TO_CHAR(date, 'YYYY-MM-DD') AS date,
     TO_CHAR(start_time, 'HH24:MI') AS start_time,

@@ -9,6 +9,8 @@ const {
 const { postSignup } = require("./controllers/signupsControllers");
 const { login } = require("./controllers/authControllers");
 
+const { requireAuth, requireStaff } = require("./middleware/auth");
+
 const app = express();
 
 app.use(cors());
@@ -26,7 +28,7 @@ app.get("/api/events/:id", getEventById);
 
 app.post("/api/signups", postSignup);
 
-app.post("/api/events", postEvent);
+app.post("/api/events", requireAuth, requireStaff, postEvent);
 
 app.post("/api/auth/login", login);
 
