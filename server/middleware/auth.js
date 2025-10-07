@@ -4,14 +4,14 @@ const requireAuth = (request, response, next) => {
   const authHeader = request.headers.authorization;
 
   if (!authHeader || !authHeader.startsWith("Bearer ")) {
-    return response.status(401).send({ msg: "Authorization required" });
+    return response.status(401).send({ msg: "Unauthorized" });
   }
 
   const token = authHeader.split(" ")[1];
 
   jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
     if (err) {
-      return response.status(401).send({ msg: "Invalid or expired token" });
+      return response.status(401).send({ msg: "Invalid token" });
     }
     request.user = decoded; // attach user info to request (id, role)
     next();

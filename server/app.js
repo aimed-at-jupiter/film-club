@@ -26,7 +26,7 @@ app.get("/api/events", getEvents);
 
 app.get("/api/events/:event_id", getEventById);
 
-app.post("/api/signups", postSignup);
+app.post("/api/signups", requireAuth, postSignup);
 
 app.post("/api/events", requireAuth, requireStaff, postEvent);
 

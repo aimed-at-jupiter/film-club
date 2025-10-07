@@ -103,43 +103,73 @@ describe("GET /api/events/:event_id", () => {
   });
 });
 describe("POST /api/signups", () => {
+  let userToken;
+
+  beforeEach(() => {
+    return request(app)
+      .post("/api/auth/login")
+      .send({ email: "olive@example.com", password: "olive123" })
+      .expect(200)
+      .then(({ body }) => {
+        userToken = body.token;
+      });
+  });
+
+  test("401: responds with Unauthorized if no token provided", () => {
+    return request(app)
+      .post("/api/signups")
+      .send({ event_id: 4 })
+      .expect(401)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Unauthorized");
+      });
+  });
+
   test("201: adds a signup and responds with the signup object", () => {
     return request(app)
       .post("/api/signups")
-      .send({ user_id: 1, event_id: 1 })
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({ event_id: 4 })
       .expect(201)
       .then(({ body }) => {
-        expect(body.signup).toHaveProperty("signup_id");
-        expect(body.signup.user_id).toBe(1);
-        expect(body.signup.event_id).toBe(1);
+        expect(body.signup).toHaveProperty("signup_id", expect.any(Number));
+        expect(body.signup.user_id).toBe(2);
+        expect(body.signup.event_id).toBe(4);
       });
   });
 
   test("400: responds with bad request if body is missing fields", () => {
     return request(app)
       .post("/api/signups")
-      .send({ user_id: 1 })
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({})
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("Bad request: missing user_id or event_id");
+        expect(body.msg).toBe("Bad request: missing event_id");
       });
   });
 
-  test("404: responds with not found if user_id or event_id doesn’t exist", () => {
+  test("404: responds with not found if event_id doesn’t exist", () => {
     return request(app)
       .post("/api/signups")
-      .send({ user_id: 999, event_id: 1 })
-      .expect(404);
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({ event_id: 999 })
+      .expect(404)
+      .then(({ body }) => {
+        expect(body.msg).toBe("User or event not found");
+      });
   });
 
   test("409: responds with conflict if signup already exists", () => {
     return request(app)
       .post("/api/signups")
-      .send({ user_id: 1, event_id: 1 })
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({ event_id: 4 })
       .then(() => {
         return request(app)
           .post("/api/signups")
-          .send({ user_id: 1, event_id: 1 })
+          .set("Authorization", `Bearer ${userToken}`)
+          .send({ event_id: 4 })
           .expect(409)
           .then(({ body }) => {
             expect(body.msg).toBe("Already signed up");
@@ -148,15 +178,13 @@ describe("POST /api/signups", () => {
   });
 });
 
-// new tests from here -->
-
 describe("POST /api/events", () => {
   let staffToken;
 
   beforeAll(() => {
     return request(app)
       .post("/api/auth/login")
-      .send({ email: "admin@filmclub.com", password: "admin123" }) // seeded staff user
+      .send({ email: "admin@filmclub.com", password: "admin123" })
       .then(({ body }) => {
         staffToken = body.token;
       });
@@ -286,7 +314,7 @@ describe("POST /api/events", () => {
       .send(newEvent)
       .expect(401)
       .then(({ body }) => {
-        expect(body.msg).toBe("Authorization required");
+        expect(body.msg).toBe("Unauthorized");
       });
   });
 });
