@@ -7,8 +7,7 @@ const {
   postEvent,
 } = require("./controllers/eventsControllers");
 const { postSignup } = require("./controllers/signupsControllers");
-const { login } = require("./controllers/authControllers");
-const { registerUser } = require("./controllers/usersControllers");
+const { login, registerUser } = require("./controllers/authControllers");
 
 const { requireAuth, requireStaff } = require("./middleware/auth");
 
