@@ -2,7 +2,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { fetchUserByEmail } = require("../models/usersModels");
 
-const login = (request, response) => {
+const login = (request, response, next) => {
   const { email, password } = request.body;
 
   if (!email || !password) {

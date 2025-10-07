@@ -1,9 +1,14 @@
 const db = require("../db/connection");
 const seed = require("../db/seeds/seed");
-const testData = require("../db/data/test-data");
+const data = require("../db/data/test-data");
 
-beforeEach(() => seed(testData));
-afterAll(() => db.end());
+beforeAll(() => {
+  return seed(data);
+});
+
+afterAll(() => {
+  return db.end();
+});
 
 describe("Database seeding", () => {
   test("events table is seeded", () => {

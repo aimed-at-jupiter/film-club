@@ -30,6 +30,9 @@ const seed = ({ eventData, userData, signupData }) => {
       `);
       })
       .then(() => {
+        return db.query(`ALTER SEQUENCE events_event_id_seq RESTART WITH 1;`);
+      })
+      .then(() => {
         return db.query(`
         CREATE TABLE users (
           user_id SERIAL PRIMARY KEY,
@@ -41,6 +44,9 @@ const seed = ({ eventData, userData, signupData }) => {
       `);
       })
       .then(() => {
+        return db.query(`ALTER SEQUENCE users_user_id_seq RESTART WITH 1;`);
+      })
+      .then(() => {
         return db.query(`
         CREATE TABLE signups (
           signup_id SERIAL PRIMARY KEY,
@@ -50,6 +56,9 @@ const seed = ({ eventData, userData, signupData }) => {
           UNIQUE(user_id, event_id)
         );
       `);
+      })
+      .then(() => {
+        return db.query(`ALTER SEQUENCE signups_signup_id_seq RESTART WITH 1;`);
       })
       // Insert events
       .then(() => {

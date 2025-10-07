@@ -12,9 +12,9 @@ const fetchEvents = () => {
     });
 };
 
-const fetchEventById = (id) => {
+const fetchEventById = (event_id) => {
   return db
-    .query(`SELECT * FROM events WHERE id = $1;`, [id])
+    .query(`SELECT * FROM events WHERE event_id = $1;`, [event_id])
     .then(({ rows }) => {
       if (rows.length === 0) {
         return Promise.reject({ status: 404, msg: "Event not found" });

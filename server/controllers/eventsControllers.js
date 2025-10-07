@@ -13,9 +13,9 @@ const getEvents = (request, response, next) => {
 };
 
 const getEventById = (request, response, next) => {
-  const { id } = request.params;
+  const { event_id } = request.params;
 
-  fetchEventById(id)
+  fetchEventById(event_id)
     .then((event) => {
       response.status(200).send({ event });
     })

@@ -8,6 +8,7 @@ const {
 } = require("./controllers/eventsControllers");
 const { postSignup } = require("./controllers/signupsControllers");
 const { login } = require("./controllers/authControllers");
+const { registerUser } = require("./controllers/usersControllers");
 
 const { requireAuth, requireStaff } = require("./middleware/auth");
 
@@ -24,13 +25,15 @@ app.get("/", (req, res) => {
 
 app.get("/api/events", getEvents);
 
-app.get("/api/events/:id", getEventById);
+app.get("/api/events/:event_id", getEventById);
 
 app.post("/api/signups", postSignup);
 
 app.post("/api/events", requireAuth, requireStaff, postEvent);
 
 app.post("/api/auth/login", login);
+
+app.post("/api/auth/register", registerUser);
 
 // custom errors from models
 app.use((err, request, response, next) => {

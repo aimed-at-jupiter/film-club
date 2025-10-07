@@ -23,7 +23,7 @@ describe("GET /api/events", () => {
         expect(events.length).toBeGreaterThan(0);
         events.forEach((event) => {
           expect(Object.keys(event)).toEqual([
-            "id",
+            "event_id",
             "title",
             "date",
             "start_time",
@@ -64,14 +64,14 @@ describe("GET /api/events", () => {
       });
   });
 });
-describe("GET /api/events/:id", () => {
+describe("GET /api/events/:event_id", () => {
   test("200: responds with a single event object when given a valid ID", () => {
     return request(app)
       .get("/api/events/1")
       .expect(200)
       .then(({ body }) => {
         const { event } = body;
-        expect(body.event).toHaveProperty("id");
+        expect(body.event).toHaveProperty("event_id");
         expect(body.event).toHaveProperty("title");
         expect(event.title).toBe("Drive (discussion)");
         expect(event.date).toBe("2026-01-03T00:00:00.000Z");
@@ -109,7 +109,7 @@ describe("POST /api/signups", () => {
       .send({ user_id: 1, event_id: 1 })
       .expect(201)
       .then(({ body }) => {
-        expect(body.signup).toHaveProperty("id");
+        expect(body.signup).toHaveProperty("signup_id");
         expect(body.signup.user_id).toBe(1);
         expect(body.signup.event_id).toBe(1);
       });
@@ -147,7 +147,21 @@ describe("POST /api/signups", () => {
       });
   });
 });
+
+// new tests from here -->
+
 describe("POST /api/events", () => {
+  let staffToken;
+
+  beforeAll(() => {
+    return request(app)
+      .post("/api/auth/login")
+      .send({ email: "admin@filmclub.com", password: "admin123" }) // seeded staff user
+      .then(({ body }) => {
+        staffToken = body.token;
+      });
+  });
+
   test("201: creates a new event, auto-generates title, and responds with the event object", () => {
     const newEvent = {
       date: "2026-06-15",
@@ -164,14 +178,14 @@ describe("POST /api/events", () => {
 
     return request(app)
       .post("/api/events")
+      .set("Authorization", `Bearer ${staffToken}`)
       .send(newEvent)
       .expect(201)
       .then(({ body }) => {
         const { event } = body;
 
-        // Title should be auto-generated
         expect(event.title).toBe("Test Film (screening)");
-        expect(event.date).toContain("2026-06-15"); // instead of exact match
+        expect(event.date).toContain("2026-06-15");
         expect(event.start_time.startsWith("19:00")).toBe(true);
         expect(event.end_time.startsWith("22:00")).toBe(true);
         expect(event.location).toBe("Cube Microplex");
@@ -179,17 +193,15 @@ describe("POST /api/events", () => {
         expect(event.film_director).toBe("Jane Doe");
         expect(event.film_year).toBe(2020);
         expect(event.event_type).toBe("screening");
-        expect(Number(event.price)).toBe(10); // cast from string
+        expect(Number(event.price)).toBe(10);
 
-        // Generated fields
-        expect(event).toHaveProperty("id", expect.any(Number));
+        expect(event).toHaveProperty("event_id", expect.any(Number));
         expect(event).toHaveProperty("created_at", expect.any(String));
       });
   });
 
   test("400: responds with error when required fields are missing", () => {
     const badEvent = {
-      // Missing date and other required fields
       location: "Cube Microplex",
       film_title: "Test Film",
       film_director: "Jane Doe",
@@ -200,6 +212,7 @@ describe("POST /api/events", () => {
 
     return request(app)
       .post("/api/events")
+      .set("Authorization", `Bearer ${staffToken}`)
       .send(badEvent)
       .expect(400)
       .then(({ body }) => {
@@ -223,6 +236,7 @@ describe("POST /api/events", () => {
 
     return request(app)
       .post("/api/events")
+      .set("Authorization", `Bearer ${staffToken}`)
       .send(badEvent)
       .expect(400)
       .then(({ body }) => {
@@ -246,10 +260,177 @@ describe("POST /api/events", () => {
 
     return request(app)
       .post("/api/events")
+      .set("Authorization", `Bearer ${staffToken}`)
       .send(badEvent)
       .expect(400)
       .then(({ body }) => {
         expect(body.msg).toBe("Invalid film_year");
       });
   });
+
+  test("401: rejects event creation without a token", () => {
+    const newEvent = {
+      date: "2026-06-15",
+      start_time: "19:00",
+      end_time: "22:00",
+      location: "Cube Microplex",
+      film_title: "Unauthorized Film",
+      film_director: "No One",
+      film_year: 2020,
+      event_type: "screening",
+      price: 10,
+    };
+
+    return request(app)
+      .post("/api/events")
+      .send(newEvent)
+      .expect(401)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Authorization required");
+      });
+  });
 });
+
+describe("POST /api/auth/register", () => {
+  test("201: registers a new user and returns a JWT", () => {
+    const newUser = {
+      username: "newuser",
+      email: "newuser@example.com",
+      password: "password123",
+    };
+
+    return request(app)
+      .post("/api/auth/register")
+      .send(newUser)
+      .expect(201)
+      .then(({ body }) => {
+        expect(body).toHaveProperty("token");
+        expect(typeof body.token).toBe("string");
+      });
+  });
+
+  test("400: responds with generic message if email already exists", () => {
+    const duplicate = {
+      username: "olive2",
+      email: "olive@example.com",
+      password: "duplicate123",
+    };
+
+    return request(app)
+      .post("/api/auth/register")
+      .send(duplicate)
+      .expect(400)
+      .then(({ body }) => {
+        expect(body.msg).toBe("Invalid request");
+      });
+  });
+});
+
+// old tests from here -->
+
+// describe("POST /api/events", () => {
+//   test("201: creates a new event, auto-generates title, and responds with the event object", () => {
+//     const newEvent = {
+//       date: "2026-06-15",
+//       start_time: "19:00",
+//       end_time: "22:00",
+//       location: "Cube Microplex",
+//       film_title: "Test Film",
+//       film_director: "Jane Doe",
+//       film_year: 2020,
+//       film_img_url: "",
+//       event_type: "screening",
+//       price: 10,
+//     };
+
+//     return request(app)
+//       .post("/api/events")
+//       .send(newEvent)
+//       .expect(201)
+//       .then(({ body }) => {
+//         const { event } = body;
+
+//         // Title should be auto-generated
+//         expect(event.title).toBe("Test Film (screening)");
+//         expect(event.date).toContain("2026-06-15"); // instead of exact match
+//         expect(event.start_time.startsWith("19:00")).toBe(true);
+//         expect(event.end_time.startsWith("22:00")).toBe(true);
+//         expect(event.location).toBe("Cube Microplex");
+//         expect(event.film_title).toBe("Test Film");
+//         expect(event.film_director).toBe("Jane Doe");
+//         expect(event.film_year).toBe(2020);
+//         expect(event.event_type).toBe("screening");
+//         expect(Number(event.price)).toBe(10); // cast from string
+
+//         // Generated fields
+//         expect(event).toHaveProperty("event_id", expect.any(Number));
+//         expect(event).toHaveProperty("created_at", expect.any(String));
+//       });
+//   });
+
+//   test("400: responds with error when required fields are missing", () => {
+//     const badEvent = {
+//       // Missing date and other required fields
+//       location: "Cube Microplex",
+//       film_title: "Test Film",
+//       film_director: "Jane Doe",
+//       film_year: 2020,
+//       event_type: "screening",
+//       price: 10,
+//     };
+
+//     return request(app)
+//       .post("/api/events")
+//       .send(badEvent)
+//       .expect(400)
+//       .then(({ body }) => {
+//         expect(body.msg).toBe("Missing required fields");
+//       });
+//   });
+
+//   test("400: responds with error for invalid event_type", () => {
+//     const badEvent = {
+//       date: "2026-07-01",
+//       start_time: "19:00",
+//       end_time: "20:00",
+//       location: "The Rising Sun",
+//       film_title: "Fake Film",
+//       film_director: "John Smith",
+//       film_year: 2020,
+//       film_img_url: "",
+//       event_type: "party", // invalid
+//       price: 0,
+//     };
+
+//     return request(app)
+//       .post("/api/events")
+//       .send(badEvent)
+//       .expect(400)
+//       .then(({ body }) => {
+//         expect(body.msg).toBe("Invalid event_type");
+//       });
+//   });
+
+//   test("400: responds with error for invalid film_year", () => {
+//     const badEvent = {
+//       date: "2026-07-01",
+//       start_time: "19:00",
+//       end_time: "22:00",
+//       location: "Watershed",
+//       film_title: "Time Machine",
+//       film_director: "Future Director",
+//       film_year: 3000, // invalid year
+//       film_img_url: "",
+//       event_type: "screening",
+//       price: 10,
+//     };
+
+//     return request(app)
+//       .post("/api/events")
+//       .send(badEvent)
+//       .expect(400)
+//       .then(({ body }) => {
+//         expect(body.msg).toBe("Invalid film_year");
+//       });
+//   });
+// });
