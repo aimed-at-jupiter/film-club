@@ -8,7 +8,9 @@
     "test": "jest --runInBand",
     "start": "node listen.js",
     "test-seed": "jest seed.test.js",
-    "dev": "nodemon listen.js"
+    "dev": "nodemon listen.js",
+    "dev-demo": "cross-env NODE_ENV=demo nodemon listen.js",
+    "seed-demo": "cross-env NODE_ENV=demo node ./db/seeds/run-seed-demo.js"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +26,7 @@
     "pg-format": "^1.0.4"
   },
   "devDependencies": {
+    "cross-env": "^10.1.0",
     "jest": "^29.7.0",
     "nodemon": "^3.1.10",
     "supertest": "^7.1.4"
