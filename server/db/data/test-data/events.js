@@ -128,7 +128,8 @@ module.exports = [
     film_title: "Chunking Express",
     film_director: "Wong Kar Wai",
     film_year: 1994,
-    film_img_url: "",
+    film_img_url:
+      "https://m.media-amazon.com/images/M/MV5BNDQ4ZmYxODctZDVlZC00OTcxLWJjOGItZjRlMzk4MDA1Yjg1XkEyXkFqcGc@._V1_SX300.jpg",
     event_type: "screening",
     price: 10,
     created_at: "2025-09-22T08:00:00",
