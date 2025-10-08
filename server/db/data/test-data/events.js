@@ -8,7 +8,8 @@ module.exports = [
     film_title: "Drive",
     film_director: "Nicolas Winding Refn",
     film_year: 2011,
-    film_img_url: "",
+    film_img_url:
+      "https://m.media-amazon.com/images/M/MV5BYTFmNTFlOTAtNzEyNi00MWU2LTg3MGEtYjA2NWY3MDliNjlkXkEyXkFqcGc@._V1_SX300.jpg",
     event_type: "discussion",
     price: 0,
     created_at: "2025-09-22T08:00:00",
@@ -22,7 +23,8 @@ module.exports = [
     film_title: "Perfect Blue",
     film_director: "Satoshi Kon",
     film_year: 1997,
-    film_img_url: "",
+    film_img_url:
+      "https://m.media-amazon.com/images/M/MV5BMzAwNDIzMzEtZDZkNC00ZDQ4LTk3ZDMtZjVhMTU2YzgzZTZiXkEyXkFqcGc@._V1_SX300.jpg",
     event_type: "discussion",
     price: 0,
     created_at: "2025-09-22T08:00:00",
@@ -36,7 +38,8 @@ module.exports = [
     film_title: "Inland Empire",
     film_director: "David Lynch",
     film_year: 2006,
-    film_img_url: "",
+    film_img_url:
+      "https://m.media-amazon.com/images/M/MV5BMTQ3NDQyNjM3NF5BMl5BanBnXkFtZTcwMzk5MDU0MQ@@._V1_SX300.jpg",
     event_type: "discussion",
     price: 0,
     created_at: "2025-09-22T08:00:00",
@@ -50,7 +53,8 @@ module.exports = [
     film_title: "American Psycho",
     film_director: "Mary Harron",
     film_year: 2000,
-    film_img_url: "",
+    film_img_url:
+      "https://m.media-amazon.com/images/M/MV5BNzBjM2I5ZjUtNmIzNy00OGNkLWIwZDMtOTAwYWUwMzA2YjdlXkEyXkFqcGc@._V1_SX300.jpg",
     event_type: "discussion",
     price: 0,
     created_at: "2025-09-22T08:00:00",
@@ -64,7 +68,8 @@ module.exports = [
     film_title: "Monos",
     film_director: "Alejandro Landes",
     film_year: 2019,
-    film_img_url: "",
+    film_img_url:
+      "https://m.media-amazon.com/images/M/MV5BN2VhMmY2YmMtZGY4OS00YmFlLTk3YTctNTE4NjVmMGEwOWI3XkEyXkFqcGc@._V1_SX300.jpg",
     event_type: "screening",
     price: 10,
     created_at: "2025-09-22T08:00:00",
@@ -78,7 +83,8 @@ module.exports = [
     film_title: "Saint Maud",
     film_director: "Rose Glass",
     film_year: 2019,
-    film_img_url: "",
+    film_img_url:
+      "https://m.media-amazon.com/images/M/MV5BNzIwMjVlMWMtMGRiYi00OTQyLThhYjEtMDQxMThjMmQ2ODBiXkEyXkFqcGc@._V1_SX300.jpg",
     event_type: "discussion",
     price: 0,
     created_at: "2025-09-22T08:00:00",
@@ -92,7 +98,8 @@ module.exports = [
     film_title: "Mandy",
     film_director: "Panos Cosmatos",
     film_year: 2018,
-    film_img_url: "",
+    film_img_url:
+      "https://m.media-amazon.com/images/M/MV5BZGI1NTNhNzctOTk4OC00N2RjLTkwYTgtOGMwMWFjMzM5ZjNiXkEyXkFqcGc@._V1_SX300.jpg",
     event_type: "discussion",
     price: 0,
     created_at: "2025-09-22T08:00:00",
@@ -106,7 +113,8 @@ module.exports = [
     film_title: "2001: A Space Odyssey",
     film_director: "Stanley Kubrick",
     film_year: 1968,
-    film_img_url: "",
+    film_img_url:
+      "https://m.media-amazon.com/images/M/MV5BNjU0NDFkMTQtZWY5OS00MmZhLTg3Y2QtZmJhMzMzMWYyYjc2XkEyXkFqcGc@._V1_SX300.jpg",
     event_type: "discussion",
     price: 0,
     created_at: "2025-09-22T08:00:00",
