@@ -1,3 +1,9 @@
+/**
+ * FAKE USERS FOR DEVELOPMENT AND DEMO PURPOSES ONLY
+ * Emails are not real. Passwords are hashed before database insertion.
+ * Do NOT reuse this pattern in production applications.
+ */
+
 module.exports = [
   {
     username: "admin",
