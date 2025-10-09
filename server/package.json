@@ -1,7 +1,7 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "listen.js",
   "scripts": {
     "setup-dbs": "psql -f ./db/setup-dbs.sql",
     "seed": "node ./db/seeds/run-seed.js",
@@ -10,7 +10,8 @@
     "test-seed": "jest seed.test.js",
     "dev": "nodemon listen.js",
     "dev-demo": "cross-env NODE_ENV=demo nodemon listen.js",
-    "seed-demo": "cross-env NODE_ENV=demo node ./db/seeds/run-seed-demo.js"
+    "seed-demo": "cross-env NODE_ENV=demo node ./db/seeds/run-seed-demo.js",
+    "seed-prod": "NODE_ENV=production npm run seed"
   },
   "keywords": [],
   "author": "",
