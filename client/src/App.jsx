@@ -1,21 +1,18 @@
 import { useEffect, useState } from "react";
 import "./App.css";
+import { Routes, Route } from "react-router-dom";
+import Navbar from "./components/Navbar";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
 
 function App() {
-  const [message, setMessage] = useState("");
-
-  useEffect(() => {
-    fetch("http://localhost:4100/")
-      .then((res) => res.text())
-      .then((data) => setMessage(data))
-      .catch((err) => console.error("Error fetching from API:", err));
-  }, []);
-
   return (
-    <div>
-      <h1>Film Club</h1>
-      <p>Backend says: {message}</p>
-    </div>
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+    </Routes>
   );
 }
 
