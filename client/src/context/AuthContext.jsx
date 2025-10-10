@@ -1,0 +1,48 @@
+import { createContext, useState, useEffect } from "react";
+import { postLogin } from "../api/postLogin";
+
+export const AuthContext = createContext();
+
+export function AuthProvider({ children }) {
+  const [user, setUser] = useState(null);
+  const [authError, setAuthError] = useState(null);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const storedUser = localStorage.getItem("user");
+    if (storedUser) setUser(JSON.parse(storedUser));
+  }, []);
+
+  const loginUser = (credentials) => {
+    setLoading(true);
+    setAuthError(null);
+
+    return postLogin(credentials)
+      .then((data) => {
+        setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.token);
+      })
+      .catch((err) => {
+        console.error("Login failed:", err.msg || err.message);
+        setAuthError(err.msg || "Login failed");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  const logoutUser = () => {
+    setUser(null);
+    localStorage.removeItem("user");
+    localStorage.removeItem("token");
+  };
+
+  return (
+    <AuthContext.Provider
+      value={{ user, loginUser, logoutUser, authError, loading }}
+    >
+      {children}
+    </AuthContext.Provider>
+  );
+}

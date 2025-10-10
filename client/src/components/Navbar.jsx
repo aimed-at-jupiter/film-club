@@ -18,14 +18,14 @@ function Navbar() {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <a className="nav-link active" aria-current="page" href="/">
+            <a className="nav-link active" aria-current="Page" href="/">
               Home
             </a>
-            <a className="nav-link" href="#">
-              Discussions
+            <a className="nav-link" href="/login">
+              Login
             </a>
-            <a className="nav-link" href="#">
-              Screenings
+            <a className="nav-link" href="/register">
+              Register
             </a>
           </div>
         </div>
