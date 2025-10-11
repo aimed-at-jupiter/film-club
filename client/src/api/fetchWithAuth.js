@@ -1,16 +1,22 @@
-// client/src/api/fetchWithAuth.js
 import { API_BASE_URL } from "./config";
 
-export function fetchWithAuth(endpoint, options = {}) {
+export function fetchWithAuth(path, options = {}) {
   const token = localStorage.getItem("token");
+
+  if (!token) {
+    return Promise.reject({
+      status: 401,
+      msg: "Unauthorized: Please log in first.",
+    });
+  }
 
   const headers = {
     "Content-Type": "application/json",
-    ...(token && { Authorization: `Bearer ${token}` }),
-    ...options.headers,
+    Authorization: `Bearer ${token}`,
+    ...(options.headers || {}),
   };
 
-  return fetch(`${API_BASE_URL}${endpoint}`, {
+  return fetch(`${API_BASE_URL}${path}`, {
     ...options,
     headers,
   })
@@ -26,7 +32,7 @@ export function fetchWithAuth(endpoint, options = {}) {
       return res.json();
     })
     .catch((err) => {
-      console.error("Error fetching:", err);
+      console.error("Error in fetchWithAuth:", err);
       throw err;
     });
 }
