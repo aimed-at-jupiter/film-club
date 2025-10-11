@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const { fetchUserByEmail, insertUser } = require("../models/usersModels");
+const { createToken } = require("../utils/createToken");
+const { sanitiseUser } = require("../utils/sanitizeUser");
 
 const login = (request, response, next) => {
   const { email, password } = request.body;
@@ -18,13 +19,13 @@ const login = (request, response, next) => {
         if (!match)
           return response.status(401).send({ msg: "Invalid credentials" });
 
-        const token = jwt.sign(
-          { id: user.user_id, role: user.role },
-          process.env.JWT_SECRET,
-          { expiresIn: "1h" }
-        );
+        const token = createToken(user);
+        const safeUser = sanitiseUser(user);
 
-        response.status(200).send({ token });
+        response.status(200).send({
+          token,
+          user: safeUser,
+        });
       });
     })
     .catch(next);
@@ -45,13 +46,13 @@ const registerUser = (request, response, next) => {
       return insertUser(username, email, hashedPassword);
     })
     .then((user) => {
-      // Sign a JWT for the new user
-      const token = jwt.sign(
-        { id: user.user_id, role: user.role },
-        process.env.JWT_SECRET,
-        { expiresIn: "1h" }
-      );
-      response.status(201).send({ token });
+      const token = createToken(user);
+      const safeUser = sanitiseUser(user);
+
+      response.status(201).send({
+        token,
+        user: safeUser,
+      });
     })
     .catch((err) => {
       // Handle duplicate emails or usernames safely
