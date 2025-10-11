@@ -21,10 +21,11 @@ function RegisterForm({ onSubmit, loading }) {
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
         <label htmlFor="username" className="form-label">
-          Name
+          Username
         </label>
         <input
           type="text"
+          aria-describedby="user name"
           className="form-control"
           id="username"
           name="username"

@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Home from "./pages/HomePage";
 import Login from "./pages/LoginPage";
 import Register from "./pages/RegisterPage";
+import EventPage from "./pages/EventPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/events/:event_id" element={<EventPage />} />
       </Routes>
     </>
   );

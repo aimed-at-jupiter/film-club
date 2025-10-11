@@ -1,31 +1,37 @@
-import { getEvents } from "../api/getEvents";
+import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import EventCard from "../components/EventCard";
+import { getEvents } from "../api/getEvents";
+import DetailedEventCard from "../components/DetailedEventCard";
 
 function EventPage() {
+  const { event_id } = useParams();
+  const [event, setEvent] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [eventsData, setEventsData] = useState([]);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    getEvents()
-      .then((body) => {
-        const { events } = body;
-        setEventsData(events);
+    setLoading(true);
+    getEvents(event_id)
+      .then((data) => {
+        setEvent(data);
         setLoading(false);
       })
       .catch((err) => {
-        console.log(err, "<<< error from geEvents");
+        console.error(err);
+        setError(err.msg || "Failed to fetch event");
+        setLoading(false);
       });
-  }, []);
+  }, [event_id]);
 
-  return loading ? (
-    <p>Loading...</p>
-  ) : (
-    <>
-      {eventsData.map((event) => {
-        return <EventCard key={event.event_id} event={event} />;
-      })}
-    </>
+  if (loading)
+    return <div className="spinner-border text-primary" role="status"></div>;
+  if (error) return <p className="text-danger">{error}</p>;
+  if (!event) return <p>No event found.</p>;
+
+  return (
+    <div className="container mt-4">
+      <DetailedEventCard event={event} />
+    </div>
   );
 }
 

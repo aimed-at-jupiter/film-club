@@ -12,8 +12,7 @@ function RegisterPage() {
   }, [user, navigate]);
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "400px" }}>
-      <h2 className="mb-4 text-center">Register</h2>
+    <div className="container mt-5" style={{ maxWidth: "540px" }}>
       <RegisterForm onSubmit={registerUser} loading={loading} />
       {authError && (
         <div className="alert alert-danger mt-3 text-center">{authError}</div>
