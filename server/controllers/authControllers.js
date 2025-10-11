@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const { fetchUserByEmail, insertUser } = require("../models/usersModels");
 const { createToken } = require("../utils/createToken");
-const { sanitiseUser } = require("../utils/sanitizeUser");
+const { sanitiseUser } = require("../utils/sanitiseUser");
 
 const login = (request, response, next) => {
   const { email, password } = request.body;
