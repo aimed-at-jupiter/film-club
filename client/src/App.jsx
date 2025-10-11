@@ -6,6 +6,7 @@ import Home from "./pages/HomePage";
 import Login from "./pages/LoginPage";
 import Register from "./pages/RegisterPage";
 import EventPage from "./pages/EventPage";
+import PostEventPage from "./pages/PostEventPage";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/events/:event_id" element={<EventPage />} />
+        <Route path="/create-event" element={<PostEventPage />} />
       </Routes>
     </>
   );
