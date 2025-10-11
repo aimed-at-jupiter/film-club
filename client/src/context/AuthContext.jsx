@@ -38,9 +38,28 @@ export function AuthProvider({ children }) {
     localStorage.removeItem("token");
   };
 
+  const registerUser = (newUserData) => {
+    setLoading(true);
+    setAuthError(null);
+
+    return postRegister(newUserData)
+      .then((data) => {
+        setUser(data.user);
+        localStorage.setItem("user", JSON.stringify(data.user));
+        localStorage.setItem("token", data.token);
+      })
+      .catch((err) => {
+        console.error("Registration failed:", err.msg || err.message);
+        setAuthError(err.msg || "Registration failed");
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
   return (
     <AuthContext.Provider
-      value={{ user, loginUser, logoutUser, authError, loading }}
+      value={{ user, loginUser, registerUser, logoutUser, authError, loading }}
     >
       {children}
     </AuthContext.Provider>
