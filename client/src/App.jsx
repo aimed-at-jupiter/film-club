@@ -7,8 +7,18 @@ import Login from "./pages/LoginPage";
 import Register from "./pages/RegisterPage";
 import EventPage from "./pages/EventPage";
 import PostEventPage from "./pages/PostEventPage";
+import { Tooltip } from "bootstrap";
 
 function App() {
+  useEffect(() => {
+    const tooltipTriggerList = document.querySelectorAll(
+      '[data-bs-toggle="tooltip"]'
+    );
+    tooltipTriggerList.forEach((tooltipTriggerEl) => {
+      new Tooltip(tooltipTriggerEl);
+    });
+  }, []);
+
   return (
     <>
       <Navbar />

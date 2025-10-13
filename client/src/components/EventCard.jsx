@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { prettyDate } from "../utils/formatters";
 
 function EventCard({ event }) {
   return (
@@ -22,7 +23,7 @@ function EventCard({ event }) {
           <div className="col-md-8">
             <div className="card-body">
               <h5 className="card-title">{event.film_title}</h5>
-              <p className="card-text">{event.date}</p>
+              <p className="card-text">{prettyDate(event.date)}</p>
               <p className="card-text">{event.location}</p>
               <p className="card-text">
                 <small className="text-body-secondary">
