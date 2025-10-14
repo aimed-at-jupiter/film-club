@@ -1,7 +1,7 @@
 import { API_BASE_URL } from "./config";
 
 export function fetchWithAuth(path, options = {}) {
-  const token = localStorage.getItem("token");
+  const { token } = useAuth();
 
   if (!token) {
     return Promise.reject({
