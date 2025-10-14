@@ -8,6 +8,7 @@ function PostEventPage() {
   const { user } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
 
   if (!user || user.role !== "staff") {
@@ -17,10 +18,12 @@ function PostEventPage() {
   const handleSubmit = (formData) => {
     setLoading(true);
     setError(null);
+    setSuccess(false);
 
-    postEvent(formData)
+    return postEvent(formData)
       .then(() => {
-        navigate("/"); // go back to home after success
+        setSuccess(true);
+        setTimeout(() => navigate("/"), 1500);
       })
       .catch((err) => {
         console.error("Error creating event:", err);
@@ -36,7 +39,7 @@ function PostEventPage() {
       {error && (
         <div className="alert alert-danger text-center mb-3">{error}</div>
       )}
-      <EventForm onSubmit={handleSubmit} loading={loading} />
+      <EventForm onSubmit={handleSubmit} loading={loading} success={success} />
     </div>
   );
 }

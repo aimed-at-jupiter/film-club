@@ -1,11 +1,15 @@
 import { useAuth } from "../context/AuthContext";
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 function Navbar() {
   const { user, logoutUser } = useAuth();
+  const [isOpen, setIsOpen] = useState(false);
+
+  const toggle = () => setIsOpen(!isOpen);
 
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar sticky-top navbar-light bg-light">
       <div className="container-fluid">
         <Link className="navbar-brand" to="/">
           Film Club
@@ -14,38 +18,33 @@ function Navbar() {
         <button
           className="navbar-toggler"
           type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
+          onClick={toggle}
           aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
+          aria-expanded={isOpen}
           aria-label="Toggle navigation"
         >
           <span className="navbar-toggler-icon"></span>
         </button>
 
-        <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div
+          className={`collapse navbar-collapse${isOpen ? " show" : ""}`}
+          id="navbarNavAltMarkup"
+        >
           <ul className="navbar-nav">
             {user && user.role === "staff" && (
               <li className="nav-item">
-                <Link
-                  className="nav-link text-success fw-bold"
-                  to="/create-event"
-                >
-                  + Create Event
+                <Link className="nav-link" to="/create-event">
+                  Create Event
                 </Link>
               </li>
             )}
 
             {user ? (
               <>
-                <li className="nav-item me-2">
-                  <span className="navbar-text">Hi, {user.username}</span>
-                </li>
+                <span className="navbar-text"> {user.username} </span>
+
                 <li className="nav-item">
-                  <button
-                    className="btn btn-outline-danger"
-                    onClick={logoutUser}
-                  >
+                  <button className="btn btn-light" onClick={logoutUser}>
                     Logout
                   </button>
                 </li>

@@ -23,13 +23,17 @@ export function fetchWithAuth(path, options = {}) {
     .then((res) => {
       if (!res.ok) {
         return res.json().then((data) => {
+          if (res.status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("user");
+          }
           return Promise.reject({
             status: res.status,
             msg: data.msg || "Request failed",
           });
         });
       }
-      return res.json();
+      return res.status === 204 ? {} : res.json();
     })
     .catch((err) => {
       console.error("Error in fetchWithAuth:", err);

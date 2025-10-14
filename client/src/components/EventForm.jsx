@@ -21,7 +21,20 @@ function EventForm({ onSubmit, loading }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData);
+    onSubmit(formData).then(() => {
+      setFormData({
+        film_title: "",
+        film_year: "",
+        film_director: "",
+        film_img_url: "",
+        event_type: "",
+        date: "",
+        start_time: "",
+        end_time: "",
+        location: "",
+        price: "",
+      });
+    });
   };
 
   return (
@@ -46,17 +59,36 @@ function EventForm({ onSubmit, loading }) {
             value={formData[key]}
             onChange={handleChange}
             required={!["film_img_url", "price"].includes(key)}
+            disabled={loading || success}
           />
         </div>
       ))}
 
       <button
         type="submit"
-        className="btn btn-success w-100"
-        disabled={loading}
+        className="btn btn-success w-100 d-flex justify-content-center align-items-center gap-2"
+        disabled={loading || success}
       >
-        {loading ? "Posting..." : "Post Event"}
+        {loading ? (
+          <>
+            <span
+              className="spinner-border spinner-border-sm"
+              role="status"
+              aria-hidden="true"
+            ></span>
+            Posting...
+          </>
+        ) : success ? (
+          "Event Posted!"
+        ) : (
+          "Post Event"
+        )}
       </button>
+      {success && (
+        <div className="alert alert-success mt-3 text-center">
+          Event created successfully!
+        </div>
+      )}
     </form>
   );
 }

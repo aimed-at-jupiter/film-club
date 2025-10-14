@@ -72,11 +72,20 @@ function DetailedEventCard({ event }) {
                   onClick={handleSignup}
                   disabled={loading || success}
                 >
-                  {loading
-                    ? "Signing up..."
-                    : success
-                    ? "Signed up!"
-                    : "Sign up"}
+                  {loading ? (
+                    <>
+                      <span
+                        className="spinner-border spinner-border-sm"
+                        role="status"
+                        aria-hidden="true"
+                      ></span>
+                      Loading...
+                    </>
+                  ) : success ? (
+                    "Signed up!"
+                  ) : (
+                    "Sign up"
+                  )}
                 </button>
 
                 <button
@@ -104,11 +113,7 @@ function DetailedEventCard({ event }) {
               </p>
             )}
 
-            {success && (
-              <p className="text-success mt-2">
-                You’re signed up! Check your email for confirmation.
-              </p>
-            )}
+            {success && <p className="text-success mt-2">You’re signed up!</p>}
 
             {error && (
               <div className="alert alert-danger mt-2 py-1">{error}</div>
