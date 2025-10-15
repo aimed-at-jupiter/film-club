@@ -10,6 +10,8 @@ import PostEventPage from "./pages/PostEventPage";
 import { Tooltip } from "bootstrap";
 
 function App() {
+  const [eventFilter, setEventFilter] = useState("all");
+
   useEffect(() => {
     const tooltipTriggerList = document.querySelectorAll(
       '[data-bs-toggle="tooltip"]'

@@ -1,8 +1,6 @@
 import { API_BASE_URL } from "./config";
 
-export function fetchWithAuth(path, options = {}) {
-  const { token } = useAuth();
-
+export function fetchWithAuth(path, options = {}, token) {
   if (!token) {
     return Promise.reject({
       status: 401,

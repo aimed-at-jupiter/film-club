@@ -6,7 +6,7 @@ export function formatForGoogleCalendar(event) {
   return {
     summary: event.film_title,
     location: event.location,
-    description: `${event.event_type} of ${event.film_title} (${event.film_year}), directed by ${event.film_director}.`,
+    description: ` Film Club ${event.event_type} of ${event.film_title} (${event.film_year}), directed by ${event.film_director}.`,
     start: {
       dateTime: start.toISOString(),
       timeZone: "Europe/London",

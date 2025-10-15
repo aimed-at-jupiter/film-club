@@ -6,7 +6,7 @@ import { formatForGoogleCalendar } from "../utils/formatForGoogleCalendar";
 import { prettyDate, prettyTime } from "../utils/formatters";
 
 function DetailedEventCard({ event }) {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const { addEventToCalendar } = useGoogleCalendar();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -16,7 +16,7 @@ function DetailedEventCard({ event }) {
     setLoading(true);
     setError(null);
 
-    postSignup(event.event_id)
+    postSignup(event.event_id, token)
       .then(() => {
         setSuccess(true);
       })

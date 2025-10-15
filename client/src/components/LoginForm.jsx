@@ -19,13 +19,13 @@ function LoginForm({ onSubmit, loading }) {
   return (
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
-        <label htmlFor="email" className="form-label">
+        <label htmlFor="email-input" className="form-label">
           Email address
         </label>
         <input
           type="email"
           className="form-control"
-          id="email"
+          id="email-input"
           name="email"
           value={formData.email}
           onChange={handleChange}
@@ -35,13 +35,13 @@ function LoginForm({ onSubmit, loading }) {
       </div>
 
       <div className="mb-3">
-        <label htmlFor="password" className="form-label">
+        <label htmlFor="password-input" className="form-label">
           Password
         </label>
         <input
           type="password"
           className="form-control"
-          id="password"
+          id="password-input"
           name="password"
           value={formData.password}
           onChange={handleChange}

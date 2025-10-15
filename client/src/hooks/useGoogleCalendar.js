@@ -1,45 +1,81 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { gapi } from "gapi-script";
 
 const SCOPES = "https://www.googleapis.com/auth/calendar.events";
+const DISCOVERY_DOCS = [
+  "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
+];
 
 export function useGoogleCalendar() {
   const CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
   const API_KEY = import.meta.env.VITE_GOOGLE_API_KEY;
-  const DISCOVERY_DOCS = [
-    "https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest",
-  ];
 
+  const [tokenClient, setTokenClient] = useState(null);
+  const [accessToken, setAccessToken] = useState(null);
+
+  // Load Google API client and GIS OAuth2 client
   useEffect(() => {
-    function start() {
+    function initializeGapiClient() {
       gapi.client
         .init({
           apiKey: API_KEY,
-          clientId: CLIENT_ID,
           discoveryDocs: DISCOVERY_DOCS,
-          scope: SCOPES,
         })
         .then(() => {
           console.log("Google API client initialized");
         })
-        .catch((err) => {
-          console.error("Error initializing Google API", err);
-        });
+        .catch((err) => console.error("Error initializing GAPI client:", err));
     }
 
-    gapi.load("client:auth2", start);
+    gapi.load("client", initializeGapiClient);
+
+    // Initialize GIS OAuth2 token client
+    const tokenClientInstance = google.accounts.oauth2.initTokenClient({
+      client_id: CLIENT_ID,
+      scope: SCOPES,
+      callback: (tokenResponse) => {
+        if (tokenResponse.error) {
+          console.error("Token error:", tokenResponse.error);
+          return;
+        }
+        console.log("Received access token");
+        setAccessToken(tokenResponse.access_token);
+      },
+    });
+
+    setTokenClient(tokenClientInstance);
   }, [API_KEY, CLIENT_ID]);
 
-  function signIn() {
-    const auth = gapi.auth2.getAuthInstance();
-    if (!auth.isSignedIn.get()) {
-      return auth.signIn();
-    }
-    return Promise.resolve();
-  }
+  // Request a token (prompts user if needed)
+  const ensureAccessToken = () =>
+    new Promise((resolve, reject) => {
+      if (accessToken) {
+        resolve(accessToken);
+        return;
+      }
 
+      if (!tokenClient) {
+        reject("Token client not initialized yet.");
+        return;
+      }
+
+      tokenClient.callback = (resp) => {
+        if (resp.error) {
+          console.error("Token error:", resp.error);
+          reject(resp.error);
+        } else {
+          console.log("Token obtained:", resp.access_token);
+          setAccessToken(resp.access_token);
+          resolve(resp.access_token);
+        }
+      };
+
+      tokenClient.requestAccessToken({ prompt: "" }); // silent if already granted
+    });
+
+  // Add event to Google Calendar
   function addEventToCalendar(event) {
-    return signIn()
+    return ensureAccessToken()
       .then(() => {
         return gapi.client.calendar.events.insert({
           calendarId: "primary",
@@ -47,7 +83,7 @@ export function useGoogleCalendar() {
         });
       })
       .then((response) => {
-        console.log("Event created:", response);
+        console.log("Event successfully created:", response);
         return response;
       })
       .catch((error) => {

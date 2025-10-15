@@ -5,7 +5,7 @@ import { postEvent } from "../api/postEvent";
 import EventForm from "../components/EventForm";
 
 function PostEventPage() {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
@@ -20,7 +20,7 @@ function PostEventPage() {
     setError(null);
     setSuccess(false);
 
-    return postEvent(formData)
+    return postEvent(formData, token)
       .then(() => {
         setSuccess(true);
         setTimeout(() => navigate("/"), 1500);

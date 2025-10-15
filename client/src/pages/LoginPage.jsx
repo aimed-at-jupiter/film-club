@@ -12,7 +12,7 @@ function LoginPage() {
   }, [user, navigate]);
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "540px" }}>
+    <div className="container mt-5">
       <LoginForm onSubmit={loginUser} loading={loading} />
       {authError && (
         <div className="alert alert-danger mt-3 text-center">{authError}</div>

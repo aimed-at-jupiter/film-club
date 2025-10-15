@@ -1,7 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { postLogin } from "../api/postLogin";
 import { useContext } from "react";
-import { Navigate } from "react-router-dom";
 
 export const AuthContext = createContext();
 
@@ -43,7 +42,7 @@ export function AuthProvider({ children }) {
     setToken(null);
     localStorage.removeItem("user");
     localStorage.removeItem("token");
-    Navigate("/");
+    window.location.href = "/";
   };
 
   const registerUser = (newUserData) => {
@@ -68,7 +67,15 @@ export function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider
-      value={{ user, loginUser, registerUser, logoutUser, authError, loading }}
+      value={{
+        user,
+        token,
+        loginUser,
+        registerUser,
+        logoutUser,
+        authError,
+        loading,
+      }}
     >
       {children}
     </AuthContext.Provider>
