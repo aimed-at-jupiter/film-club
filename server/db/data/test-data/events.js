@@ -120,12 +120,12 @@ module.exports = [
     created_at: "2025-09-22T08:00:00",
   },
   {
-    title: "Chunking Express (screening)",
+    title: "Chungking Express (screening)",
     date: "2026-02-28",
     start_time: "19:00:00",
     end_time: "22:00:00",
     location: "Watershed",
-    film_title: "Chunking Express",
+    film_title: "Chungking Express",
     film_director: "Wong Kar Wai",
     film_year: 1994,
     film_img_url:

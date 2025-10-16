@@ -30,9 +30,17 @@ const addEvent = (eventData) => {
     end_time,
     location,
     film_title,
-    film_director,
     film_year,
+    film_director,
+    film_writer,
+    film_plot,
+    film_genre,
+    film_actors,
+    film_runtime,
+    film_country,
+    film_language,
     film_img_url,
+    film_imdb_id,
     event_type,
     price,
   } = eventData;
@@ -41,21 +49,32 @@ const addEvent = (eventData) => {
 
   const queryStr = `
     INSERT INTO events
-    (title, date, start_time, end_time, location, film_title, film_director, film_year, film_img_url, event_type, price)
-    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11)
+    (title, date, start_time, end_time, location,
+     film_title, film_year, film_director, film_writer, film_plot, film_genre,
+     film_actors, film_runtime, film_country, film_language, film_img_url, film_imdb_id,
+     event_type, price)
+    VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18,$19)
     RETURNING event_id,
-    title,
-    TO_CHAR(date, 'YYYY-MM-DD') AS date,
-    TO_CHAR(start_time, 'HH24:MI') AS start_time,
-    TO_CHAR(end_time, 'HH24:MI') AS end_time,
-    location,
-    film_title,
-    film_director,
-    film_year,
-    film_img_url,
-    event_type,
-    price::INT AS price,
-    created_at;
+      title,
+      TO_CHAR(date, 'YYYY-MM-DD') AS date,
+      TO_CHAR(start_time, 'HH24:MI') AS start_time,
+      TO_CHAR(end_time, 'HH24:MI') AS end_time,
+      location,
+      film_title,
+      film_year,
+      film_director,
+      film_writer,
+      film_plot,
+      film_genre,
+      film_actors,
+      film_runtime,
+      film_country,
+      film_language,
+      film_img_url,
+      film_imdb_id,
+      event_type,
+      price::INT AS price,
+      created_at;
   `;
 
   const values = [
@@ -65,9 +84,17 @@ const addEvent = (eventData) => {
     end_time,
     location,
     film_title,
-    film_director,
     film_year,
+    film_director,
+    film_writer,
+    film_plot,
+    film_genre,
+    film_actors,
+    film_runtime,
+    film_country,
+    film_language,
     film_img_url || "",
+    film_imdb_id || "",
     event_type,
     price,
   ];

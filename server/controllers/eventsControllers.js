@@ -19,7 +19,7 @@ const getEventById = (request, response, next) => {
     .then((event) => {
       response.status(200).send({ event });
     })
-    .catch(next); // error middleware will handle 404/500
+    .catch(next);
 };
 
 const postEvent = (request, response, next) => {
@@ -29,9 +29,17 @@ const postEvent = (request, response, next) => {
     end_time,
     location,
     film_title,
-    film_director,
     film_year,
+    film_director,
+    film_writer,
+    film_plot,
+    film_genre,
+    film_actors,
+    film_runtime,
+    film_country,
+    film_language,
     film_img_url,
+    film_imdb_id,
     event_type,
     price,
   } = request.body;
@@ -52,15 +60,11 @@ const postEvent = (request, response, next) => {
   }
 
   if (!["discussion", "screening"].includes(event_type)) {
-    return response.status(400).send({ msg: "Invalid event_type" });
+    return response.status(400).send({ msg: "Invalid event type" });
   }
-
-  if (
-    typeof film_year !== "number" ||
-    film_year < 1880 ||
-    film_year > new Date().getFullYear()
-  ) {
-    return response.status(400).send({ msg: "Invalid film_year" });
+  const year = Number(film_year);
+  if (isNaN(year) || year < 1888 || year > new Date().getFullYear() + 1) {
+    return response.status(400).send({ msg: "Invalid film year" });
   }
 
   addEvent({
@@ -69,9 +73,17 @@ const postEvent = (request, response, next) => {
     end_time,
     location,
     film_title,
-    film_director,
     film_year,
+    film_director,
+    film_writer,
+    film_plot,
+    film_genre,
+    film_actors,
+    film_runtime,
+    film_country,
+    film_language,
     film_img_url,
+    film_imdb_id,
     event_type,
     price,
   })
