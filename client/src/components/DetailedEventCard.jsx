@@ -79,33 +79,35 @@ function DetailedEventCard({ event }) {
 
             {user ? (
               <>
-                <button
-                  className="btn btn-primary w-100 mt3"
-                  onClick={handlePayNow}
-                >
-                  Pay
-                </button>
-
-                <button
-                  className="btn btn-primary w-100 mt-3"
-                  onClick={handleSignup}
-                  disabled={loading || success}
-                >
-                  {loading ? (
-                    <>
-                      <span
-                        className="spinner-border spinner-border-sm"
-                        role="status"
-                        aria-hidden="true"
-                      ></span>
-                      Loading...
-                    </>
-                  ) : success ? (
-                    "Signed up!"
-                  ) : (
-                    "Sign up"
-                  )}
-                </button>
+                {event.event_type === "screening" ? (
+                  <button
+                    className="btn btn-primary w-100 mt3"
+                    onClick={handlePayNow}
+                  >
+                    Buy Ticket
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-primary w-100 mt-3"
+                    onClick={handleSignup}
+                    disabled={loading || success}
+                  >
+                    {loading ? (
+                      <>
+                        <span
+                          className="spinner-border spinner-border-sm"
+                          role="status"
+                          aria-hidden="true"
+                        ></span>
+                        Loading...
+                      </>
+                    ) : success ? (
+                      "Signed up!"
+                    ) : (
+                      "Sign up"
+                    )}
+                  </button>
+                )}
 
                 <button
                   className="btn btn-primary w-100 mt-3"

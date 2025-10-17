@@ -9,7 +9,6 @@ require("dotenv").config({
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 const createCheckoutSession = (eventData) => {
-  // eventData will include things like title, price, etc.
   if (!eventData || !eventData.price || !eventData.film_title) {
     return Promise.reject({ status: 400, msg: "Missing event data" });
   }
@@ -31,8 +30,11 @@ const createCheckoutSession = (eventData) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.CLIENT_URL}/payment-success`,
+      success_url: `${process.env.CLIENT_URL}/payment-success?event_id=${eventData.event_id}`,
       cancel_url: `${process.env.CLIENT_URL}/payment-cancelled`,
+      metadata: {
+        event_id: String(eventData.event_id),
+      },
     })
     .then((session) => {
       return { url: session.url };
