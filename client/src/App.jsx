@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
@@ -8,10 +8,10 @@ import Register from "./pages/RegisterPage";
 import EventPage from "./pages/EventPage";
 import PostEventPage from "./pages/PostEventPage";
 import { Tooltip } from "bootstrap";
+import { EventFilterProvider } from "./context/EventFilterContext";
+import { AuthProvider } from "./context/AuthContext";
 
 function App() {
-  const [eventFilter, setEventFilter] = useState("all");
-
   useEffect(() => {
     const tooltipTriggerList = document.querySelectorAll(
       '[data-bs-toggle="tooltip"]'
@@ -22,16 +22,18 @@ function App() {
   }, []);
 
   return (
-    <>
-      <Navbar />
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/events/:event_id" element={<EventPage />} />
-        <Route path="/create-event" element={<PostEventPage />} />
-      </Routes>
-    </>
+    <AuthProvider>
+      <EventFilterProvider>
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/events/:event_id" element={<EventPage />} />
+          <Route path="/create-event" element={<PostEventPage />} />
+        </Routes>
+      </EventFilterProvider>
+    </AuthProvider>
   );
 }
 

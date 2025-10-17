@@ -64,7 +64,7 @@ export function useGoogleCalendar() {
           console.error("Token error:", resp.error);
           reject(resp.error);
         } else {
-          console.log("Token obtained:", resp.access_token);
+          console.log("Token obtained:");
           setAccessToken(resp.access_token);
           resolve(resp.access_token);
         }
