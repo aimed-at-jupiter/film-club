@@ -4,6 +4,7 @@ import { postSignup } from "../api/postSignup";
 import { useGoogleCalendar } from "../hooks/useGoogleCalendar";
 import { formatForGoogleCalendar } from "../utils/formatForGoogleCalendar";
 import { prettyDate, prettyTime } from "../utils/formatters";
+import { createCheckoutSession } from "../api/createCheckoutSession";
 
 function DetailedEventCard({ event }) {
   const { user, token } = useAuth();
@@ -41,6 +42,17 @@ function DetailedEventCard({ event }) {
       });
   }
 
+  const handlePayNow = () => {
+    createCheckoutSession(event, token)
+      .then((url) => {
+        window.location.href = url; // Redirect to Stripe Checkout
+      })
+      .catch((err) => {
+        console.error("Stripe checkout error:", err);
+        alert(err.msg || "Failed to initiate payment");
+      });
+  };
+
   return (
     <div className="card shadow-sm mb-3 border-0" style={{ maxWidth: "540px" }}>
       <div className="row g-0">
@@ -67,6 +79,13 @@ function DetailedEventCard({ event }) {
 
             {user ? (
               <>
+                <button
+                  className="btn btn-primary w-100 mt3"
+                  onClick={handlePayNow}
+                >
+                  Pay
+                </button>
+
                 <button
                   className="btn btn-primary w-100 mt-3"
                   onClick={handleSignup}

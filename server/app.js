@@ -9,6 +9,7 @@ const {
 const { postSignup } = require("./controllers/signupsControllers");
 const { login, registerUser } = require("./controllers/authControllers");
 const { getOmdbData } = require("./controllers/omdbController");
+const { postStripeSession } = require("./controllers/stripeController");
 
 const { requireAuth, requireStaff } = require("./middleware/auth");
 
@@ -36,6 +37,8 @@ app.post("/api/auth/login", login);
 app.post("/api/auth/register", registerUser);
 
 app.get("/api/omdb", requireAuth, requireStaff, getOmdbData);
+
+app.post("/api/create-checkout-session", postStripeSession);
 
 // custom errors from models
 app.use((err, request, response, next) => {

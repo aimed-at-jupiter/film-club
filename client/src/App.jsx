@@ -7,6 +7,8 @@ import Login from "./pages/LoginPage";
 import Register from "./pages/RegisterPage";
 import EventPage from "./pages/EventPage";
 import PostEventPage from "./pages/PostEventPage";
+import PaymentSuccess from "./pages/PaymentSuccess";
+import PaymentCancelled from "./pages/PaymentCancelled";
 import { Tooltip } from "bootstrap";
 import { EventFilterProvider } from "./context/EventFilterContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -30,6 +32,8 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/events/:event_id" element={<EventPage />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-cancelled" element={<PaymentCancelled />} />
           <Route path="/create-event" element={<PostEventPage />} />
         </Routes>
       </EventFilterProvider>

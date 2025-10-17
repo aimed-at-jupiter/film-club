@@ -25,7 +25,8 @@
     "jsonwebtoken": "^9.0.2",
     "node-fetch": "^2.7.0",
     "pg": "^8.16.3",
-    "pg-format": "^1.0.4"
+    "pg-format": "^1.0.4",
+    "stripe": "^19.1.0"
   },
   "devDependencies": {
     "cross-env": "^10.1.0",
