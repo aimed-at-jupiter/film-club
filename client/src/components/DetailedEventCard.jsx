@@ -5,6 +5,7 @@ import { useGoogleCalendar } from "../hooks/useGoogleCalendar";
 import { formatForGoogleCalendar } from "../utils/formatForGoogleCalendar";
 import { prettyDate, prettyTime } from "../utils/formatters";
 import { createCheckoutSession } from "../api/createCheckoutSession";
+import { getUserSignups } from "../api/getUserSignups";
 
 function DetailedEventCard({ event }) {
   const { user, token } = useAuth();
@@ -43,13 +44,28 @@ function DetailedEventCard({ event }) {
   }
 
   const handlePayNow = () => {
-    createCheckoutSession(event, token)
-      .then((url) => {
-        window.location.href = url; // Redirect to Stripe Checkout
+    getUserSignups(token)
+      .then((signups) => {
+        const alreadySignedUp = signups.some(
+          (s) => s.event_id === event.event_id
+        );
+        if (alreadySignedUp) {
+          alert("You're already signed up for this event!");
+          return;
+        }
+
+        createCheckoutSession(event, token)
+          .then((url) => {
+            window.location.href = url; // Redirect to Stripe Checkout
+          })
+          .catch((err) => {
+            console.error("Stripe checkout error:", err);
+            alert(err.msg || "Failed to initiate payment");
+          });
       })
       .catch((err) => {
-        console.error("Stripe checkout error:", err);
-        alert(err.msg || "Failed to initiate payment");
+        console.error("Failed to check signups:", err);
+        alert("Could not verify signup status");
       });
   };
 

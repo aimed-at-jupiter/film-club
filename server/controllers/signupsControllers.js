@@ -1,4 +1,4 @@
-const { addSignup } = require("../models/signupsModels");
+const { addSignup, fetchSignupsByUser } = require("../models/signupsModels");
 
 const postSignup = (request, response, next) => {
   const user_id = request.user.id; // extracted from JWT by requireAuth
@@ -14,4 +14,14 @@ const postSignup = (request, response, next) => {
     })
     .catch(next);
 };
-module.exports = { postSignup };
+
+const getUserSignups = (request, response, next) => {
+  const user_id = request.user.user_id;
+
+  fetchSignupsByUser(user_id)
+    .then((signups) => {
+      response.status(200).send({ signups });
+    })
+    .catch(next);
+};
+module.exports = { postSignup, getUserSignups };

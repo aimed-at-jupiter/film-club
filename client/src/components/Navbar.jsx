@@ -84,6 +84,15 @@ function Navbar() {
               <>
                 <span className="navbar-text me-2"> {user.username} </span>
                 <li className="nav-item">
+                  <Link
+                    className="nav-link"
+                    to="/my-events"
+                    onClick={closeNavbar}
+                  >
+                    My Events
+                  </Link>
+                </li>
+                <li className="nav-item">
                   <button
                     className="btn btn-light"
                     onClick={() => {

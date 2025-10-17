@@ -6,7 +6,10 @@ const {
   getEventById,
   postEvent,
 } = require("./controllers/eventsControllers");
-const { postSignup } = require("./controllers/signupsControllers");
+const {
+  postSignup,
+  getUserSignups,
+} = require("./controllers/signupsControllers");
 const { login, registerUser } = require("./controllers/authControllers");
 const { getOmdbData } = require("./controllers/omdbController");
 const { postStripeSession } = require("./controllers/stripeController");
@@ -27,6 +30,8 @@ app.get("/", (req, res) => {
 app.get("/api/events", getEvents);
 
 app.get("/api/events/:event_id", getEventById);
+
+app.get("/api/my-signups", requireAuth, getUserSignups);
 
 app.post("/api/signups", requireAuth, postSignup);
 
