@@ -38,7 +38,7 @@ app.post("/api/auth/register", registerUser);
 
 app.get("/api/omdb", requireAuth, requireStaff, getOmdbData);
 
-app.post("/api/create-checkout-session", postStripeSession);
+app.post("/api/create-checkout-session", requireAuth, postStripeSession);
 
 // custom errors from models
 app.use((err, request, response, next) => {

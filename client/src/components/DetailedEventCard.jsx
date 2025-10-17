@@ -79,7 +79,7 @@ function DetailedEventCard({ event }) {
 
             {user ? (
               <>
-                {event.event_type === "screening" ? (
+                {event.price > 0 ? (
                   <button
                     className="btn btn-primary w-100 mt3"
                     onClick={handlePayNow}
