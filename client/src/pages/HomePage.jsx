@@ -1,15 +1,31 @@
 import { getEvents } from "../api/getEvents";
 import { AuthContext } from "../context/AuthContext";
 import { useContext, useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
 import { useEventFilter } from "../context/EventFilterContext";
 import EventCard from "../components/EventCard";
 
 function HomePage() {
   const { user } = useContext(AuthContext);
-  const { filter } = useEventFilter();
+  const { filter, setFilter } = useEventFilter();
+  const location = useLocation();
   const [loading, setLoading] = useState(false);
   const [events, setEvents] = useState([]);
   const [error, setError] = useState(null);
+
+  useEffect(() => {
+    const handleFilterChange = (event) => {
+      setFilter(event.detail);
+    };
+    window.addEventListener("setFilter", handleFilterChange);
+    return () => window.removeEventListener("setFilter", handleFilterChange);
+  }, []);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const filterParam = params.get("filter");
+    if (filterParam) setFilter(filterParam);
+  }, [location.search]);
 
   useEffect(() => {
     setLoading(true);
@@ -25,12 +41,10 @@ function HomePage() {
       });
   }, []);
 
-  const filteredEvents =
-    filter === "all"
-      ? events
-      : events.filter(
-          (event) => event.event_type.toLowerCase() === filter.toLowerCase()
-        );
+  const filteredEvents = events.filter((event) => {
+    if (filter === "all") return true;
+    return event.event_type.toLowerCase() === filter;
+  });
 
   if (loading)
     return <div className="spinner-border text-primary" role="status"></div>;

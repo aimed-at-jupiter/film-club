@@ -1,5 +1,5 @@
 import { useAuth } from "../context/AuthContext";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { useEventFilter } from "../context/EventFilterContext";
 
@@ -7,9 +7,22 @@ function Navbar() {
   const { user, logoutUser } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const { filter, setFilter } = useEventFilter();
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const handleFilterClick = (filterType) => {
+    setFilter(filterType);
+    if (location.pathname === "/") {
+      window.dispatchEvent(
+        new CustomEvent("setFilter", { detail: filterType })
+      );
+    } else {
+      navigate(`/?filter=${filterType}`);
+    }
+    setIsOpen(false);
+  };
 
   const toggle = () => setIsOpen(!isOpen);
-
   const closeNavbar = () => setIsOpen(false);
 
   return (
@@ -40,7 +53,7 @@ function Navbar() {
                 className={`btn btn-link nav-link ${
                   filter === "all" ? "fw-bold" : ""
                 }`}
-                onClick={() => setFilter("all")}
+                onClick={() => handleFilterClick("all")}
               >
                 All Events
               </button>
@@ -50,7 +63,7 @@ function Navbar() {
                 className={`btn btn-link nav-link ${
                   filter === "screening" ? "fw-bold" : ""
                 }`}
-                onClick={() => setFilter("screening")}
+                onClick={() => handleFilterClick("screening")}
               >
                 Screenings
               </button>
@@ -60,7 +73,7 @@ function Navbar() {
                 className={`btn btn-link nav-link ${
                   filter === "discussion" ? "fw-bold" : ""
                 }`}
-                onClick={() => setFilter("discussion")}
+                onClick={() => handleFilterClick("discussion")}
               >
                 Discussions
               </button>
@@ -79,7 +92,7 @@ function Navbar() {
             )}
           </ul>
 
-          <ul className="navbar-nav ms-suto">
+          <ul className="navbar-nav ms-auto">
             {user ? (
               <>
                 <span className="navbar-text me-2"> {user.username} </span>

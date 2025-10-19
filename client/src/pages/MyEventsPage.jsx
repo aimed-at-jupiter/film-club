@@ -12,7 +12,6 @@ function MyEventsPage() {
   useEffect(() => {
     getUserSignups(token)
       .then((data) => {
-        console.log(data);
         setSignups(data);
       })
       .catch((err) => {
