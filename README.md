@@ -1,4 +1,5 @@
 🎬 Film Club
+
 Film Club is a full-stack event management platform for hosting and attending film screenings and discussions.
 Users can sign up, purchase tickets securely via Stripe, and add events directly to their Google Calendar.
 
