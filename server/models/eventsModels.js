@@ -5,6 +5,7 @@ const fetchEvents = () => {
     .query(
       `SELECT * 
        FROM events
+       WHERE date >= CURRENT_DATE
        ORDER BY date ASC, start_time ASC;`
     )
     .then(({ rows }) => {
