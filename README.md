@@ -56,7 +56,7 @@ VITE_STRIPE_PUBLIC_KEY=your_stripe_test_public_key
 
 For deployment (.env.production), replace with your live API URL and keys.
 
-5 Start the app
+5. Start the app
 Run both the server and client in separate terminals:
 
 Terminal 1 – backend
