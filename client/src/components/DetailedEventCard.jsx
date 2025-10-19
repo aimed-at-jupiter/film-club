@@ -1,20 +1,32 @@
 import { useState } from "react";
 import { useAuth } from "../context/AuthContext";
 import { postSignup } from "../api/postSignup";
-import { useGoogleCalendar } from "../hooks/useGoogleCalendar";
-import { formatForGoogleCalendar } from "../utils/formatForGoogleCalendar";
+// import { useGoogleCalendar } from "../hooks/useGoogleCalendar";
+// import { formatForGoogleCalendar } from "../utils/formatForGoogleCalendar";
+import { buildGoogleCalendarUrl } from "../utils/formatForGoogleCalendar";
+
 import { prettyDate, prettyTime } from "../utils/formatters";
 import { createCheckoutSession } from "../api/createCheckoutSession";
-import { getUserSignups } from "../api/getUserSignups";
+import { useEffect } from "react";
 
-function DetailedEventCard({ event }) {
+function DetailedEventCard({ event, userSignups, setUserSignups }) {
   const { user, token } = useAuth();
-  const { addEventToCalendar } = useGoogleCalendar();
+  // const { addEventToCalendar } = useGoogleCalendar();
 
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
   const [showMore, setShowMore] = useState(false);
+
+  useEffect(() => {
+    if (!userSignups || !event) return;
+
+    const alreadySignedUp = userSignups.some(
+      (s) => s.event_id === event.event_id
+    );
+
+    if (alreadySignedUp) setSuccess(true);
+  }, [userSignups, event]);
 
   function handleSignup() {
     setLoading(true);
@@ -23,6 +35,9 @@ function DetailedEventCard({ event }) {
     postSignup(event.event_id, token)
       .then(() => {
         setSuccess(true);
+        if (setUserSignups) {
+          setUserSignups([...userSignups, { event_id: event.event_id }]);
+        }
       })
       .catch((err) => {
         console.error("Signup failed:", err);
@@ -34,41 +49,47 @@ function DetailedEventCard({ event }) {
   }
 
   function handleAddToCalendar() {
-    const calendarEvent = formatForGoogleCalendar(event);
-
-    addEventToCalendar(calendarEvent)
-      .then(() => {
-        alert("Event added to your Google Calendar!");
-      })
-      .catch(() => {
-        alert("Failed to add event to calendar.");
-      });
+    const calendarUrl = buildGoogleCalendarUrl(event);
+    window.open(calendarUrl, "_blank", "noopener,noreferrer");
   }
 
-  const handlePayNow = () => {
-    getUserSignups(token)
-      .then((signups) => {
-        const alreadySignedUp = signups.some(
-          (s) => s.event_id === event.event_id
-        );
-        if (alreadySignedUp) {
-          alert("You're already signed up for this event!");
-          return;
-        }
+  // function handleAddToCalendar() {
+  //   const calendarEvent = formatForGoogleCalendar(event);
 
-        createCheckoutSession(event, token)
-          .then((url) => {
-            window.location.href = url;
-          })
-          .catch((err) => {
-            console.error("Stripe checkout error:", err);
-            alert(err.msg || "Failed to initiate payment");
-          });
+  //   addEventToCalendar(calendarEvent)
+  //     .then(() => {
+  //       alert("Event added to your Google Calendar!");
+  //     })
+  //     .catch(() => {
+  //       alert("Failed to add event to calendar.");
+  //     });
+  // }
+
+  const handlePayNow = () => {
+    if (!user || !token) return;
+
+    const alreadySignedUp = userSignups.some(
+      (s) => s.event_id === event.event_id
+    );
+
+    if (alreadySignedUp) {
+      alert("You're already signed up for this event!");
+      return;
+    }
+    setLoading(true);
+    createCheckoutSession(event, token)
+      .then((url) => {
+        window.location.href = url;
+      })
+      .catch((err) => {
+        console.error("Stripe checkout error:", err);
+        alert(err.msg || "Failed to initiate payment");
       })
       .catch((err) => {
         console.error("Failed to check signups:", err);
         alert("Could not verify signup status");
-      });
+      })
+      .finally(() => setLoading(false));
   };
 
   return (

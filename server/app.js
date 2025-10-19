@@ -20,7 +20,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: ["https://jupiter-film-club.netlify.app"],
+    origin: ["https://jupiter-film-club.netlify.app", process.env.CLIENT_URL],
   })
 );
 

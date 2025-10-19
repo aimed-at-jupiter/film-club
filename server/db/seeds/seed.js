@@ -81,6 +81,14 @@ const seed = ({ eventData, userData, signupData }) => {
             film_director,
             film_year,
             film_img_url,
+            film_writer,
+            film_plot,
+            film_genre,
+            film_actors,
+            film_runtime,
+            film_country,
+            film_language,
+            film_imdb_id,
             event_type,
             price,
             created_at,
@@ -94,6 +102,14 @@ const seed = ({ eventData, userData, signupData }) => {
             film_director,
             film_year,
             film_img_url,
+            film_writer,
+            film_plot,
+            film_genre,
+            film_actors,
+            film_runtime,
+            film_country,
+            film_language,
+            film_imdb_id,
             event_type,
             price,
             created_at,
@@ -102,8 +118,14 @@ const seed = ({ eventData, userData, signupData }) => {
 
         const eventSqlString = format(
           `INSERT INTO events 
-          (title, date, start_time, end_time, location, film_title, film_director, film_year, film_img_url, event_type, price, created_at)
-          VALUES %L RETURNING *;`,
+  (
+    title, date, start_time, end_time, location, 
+    film_title, film_director, film_year, film_img_url, 
+    film_writer, film_plot, film_genre, film_actors, film_runtime, 
+    film_country, film_language, film_imdb_id, 
+    event_type, price, created_at
+  )
+  VALUES %L RETURNING *;`,
           formattedEventValues
         );
 

@@ -4,6 +4,7 @@ import { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { useEventFilter } from "../context/EventFilterContext";
 import EventCard from "../components/EventCard";
+import ErrorAlert from "../components/ErrorAlert";
 
 function HomePage() {
   const { user } = useContext(AuthContext);

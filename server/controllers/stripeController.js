@@ -1,4 +1,5 @@
 const { createCheckoutSession } = require("../models/stripeModel");
+const { checkIfUserSignedUp } = require("../models/signupsModels");
 
 const postStripeSession = (request, response, next) => {
   const userId = request.user.user_id;

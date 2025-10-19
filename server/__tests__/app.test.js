@@ -33,6 +33,14 @@ describe("GET /api/events", () => {
             "film_director",
             "film_year",
             "film_img_url",
+            "film_writer",
+            "film_plot",
+            "film_genre",
+            "film_actors",
+            "film_runtime",
+            "film_country",
+            "film_language",
+            "film_imdb_id",
             "event_type",
             "price",
             "created_at",
@@ -268,7 +276,7 @@ describe("POST /api/events", () => {
       .send(badEvent)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("Invalid event_type");
+        expect(body.msg).toBe("Invalid event type");
       });
   });
 
@@ -292,7 +300,7 @@ describe("POST /api/events", () => {
       .send(badEvent)
       .expect(400)
       .then(({ body }) => {
-        expect(body.msg).toBe("Invalid film_year");
+        expect(body.msg).toBe("Invalid film year");
       });
   });
 

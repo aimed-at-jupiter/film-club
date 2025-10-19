@@ -10,9 +10,18 @@ module.exports = [
     film_year: 2011,
     film_img_url:
       "https://m.media-amazon.com/images/M/MV5BYTFmNTFlOTAtNzEyNi00MWU2LTg3MGEtYjA2NWY3MDliNjlkXkEyXkFqcGc@._V1_SX300.jpg",
+    film_writer: "Hossein Amini, James Sallis",
+    film_plot:
+      "A mysterious Hollywood action film stuntman gets in trouble with gangsters when he tries to help his neighbor's husband rob a pawn shop while serving as his getaway driver.",
+    film_genre: "Action, Drama",
+    film_actors: "Ryan Gosling, Carey Mulligan, Bryan Cranston",
+    film_runtime: "100 min",
+    film_country: "United States",
+    film_language: "English, Spanish",
+    film_imdb_id: "tt0780504",
     event_type: "discussion",
-    price: 0,
-    created_at: "2025-09-22T08:00:00",
+    price: "0.00",
+    created_at: "2025-09-22 08:00:00",
   },
   {
     title: "Perfect Blue (discussion)",
@@ -25,9 +34,18 @@ module.exports = [
     film_year: 1997,
     film_img_url:
       "https://m.media-amazon.com/images/M/MV5BMzAwNDIzMzEtZDZkNC00ZDQ4LTk3ZDMtZjVhMTU2YzgzZTZiXkEyXkFqcGc@._V1_SX300.jpg",
+    film_writer: "Sadayuki Murai, Satoshi Kon, Yoshikazu Takeuchi",
+    film_plot:
+      "A pop singer gives up her career to become an actress, but she slowly goes insane when she starts being stalked by an obsessed fan and what seems to be a ghost of her past.",
+    film_genre: "Animation, Crime, Drama",
+    film_actors: "Junko Iwao, Rica Matsumoto, Shinpachi Tsuji",
+    film_runtime: "81 min",
+    film_country: "Japan",
+    film_language: "Japanese, English",
+    film_imdb_id: "tt0156887",
     event_type: "discussion",
-    price: 0,
-    created_at: "2025-09-22T08:00:00",
+    price: "0.00",
+    created_at: "2025-09-22 08:00:00",
   },
   {
     title: "Inland Empire (discussion)",
@@ -40,9 +58,18 @@ module.exports = [
     film_year: 2006,
     film_img_url:
       "https://m.media-amazon.com/images/M/MV5BMTQ3NDQyNjM3NF5BMl5BanBnXkFtZTcwMzk5MDU0MQ@@._V1_SX300.jpg",
+    film_writer: "David Lynch",
+    film_plot:
+      "As an actress begins to adopt the persona of her character in a film, her world becomes nightmarish and surreal.",
+    film_genre: "Drama, Fantasy, Mystery",
+    film_actors: "Karolina Gruszka, Krzysztof Majchrzak, Grace Zabriskie",
+    film_runtime: "180 min",
+    film_country: "France, Poland, United States",
+    film_language: "English, Polish",
+    film_imdb_id: "tt0460829",
     event_type: "discussion",
-    price: 0,
-    created_at: "2025-09-22T08:00:00",
+    price: "0.00",
+    created_at: "2025-09-22 08:00:00",
   },
   {
     title: "American Psycho (discussion)",
@@ -55,9 +82,18 @@ module.exports = [
     film_year: 2000,
     film_img_url:
       "https://m.media-amazon.com/images/M/MV5BNzBjM2I5ZjUtNmIzNy00OGNkLWIwZDMtOTAwYWUwMzA2YjdlXkEyXkFqcGc@._V1_SX300.jpg",
+    film_writer: "Bret Easton Ellis, Mary Harron, Guinevere Turner",
+    film_plot:
+      "A wealthy New York City investment banking executive, Patrick Bateman, hides his alternate psychopathic ego from his co-workers and friends as he delves deeper into his violent, hedonistic fantasies.",
+    film_genre: "Crime, Drama, Horror",
+    film_actors: "Christian Bale, Justin Theroux, Josh Lucas",
+    film_runtime: "102 min",
+    film_country: "United States",
+    film_language: "English, Spanish, Cantonese",
+    film_imdb_id: "tt0144084",
     event_type: "discussion",
-    price: 0,
-    created_at: "2025-09-22T08:00:00",
+    price: "0.00",
+    created_at: "2025-09-22 08:00:00",
   },
   {
     title: "Monos (screening)",
@@ -70,9 +106,19 @@ module.exports = [
     film_year: 2019,
     film_img_url:
       "https://m.media-amazon.com/images/M/MV5BN2VhMmY2YmMtZGY4OS00YmFlLTk3YTctNTE4NjVmMGEwOWI3XkEyXkFqcGc@._V1_SX300.jpg",
+    film_writer: "Alejandro Landes, Alexis Dos Santos",
+    film_plot:
+      "On a remote mountaintop, eight kids with guns watch over a hostage and a conscripted milk cow.",
+    film_genre: "Adventure, Drama, Thriller",
+    film_actors: "Sofia Buenaventura, Julián Giraldo, Karen Quintero",
+    film_runtime: "102 min",
+    film_country:
+      "Colombia, Argentina, Netherlands, Germany, Sweden, Uruguay, United States, Switzerland, Denmark, France, Spain",
+    film_language: "Spanish, English",
+    film_imdb_id: "tt6062774",
     event_type: "screening",
-    price: 10,
-    created_at: "2025-09-22T08:00:00",
+    price: "10.00",
+    created_at: "2025-09-22 08:00:00",
   },
   {
     title: "Saint Maud (discussion)",
@@ -85,9 +131,18 @@ module.exports = [
     film_year: 2019,
     film_img_url:
       "https://m.media-amazon.com/images/M/MV5BNzIwMjVlMWMtMGRiYi00OTQyLThhYjEtMDQxMThjMmQ2ODBiXkEyXkFqcGc@._V1_SX300.jpg",
+    film_writer: "Rose Glass",
+    film_plot:
+      "A pious nurse becomes dangerously obsessed with saving the soul of her dying patient.",
+    film_genre: "Drama, Horror, Mystery",
+    film_actors: "Morfydd Clark, Caoilfhionn Dunne, Jennifer Ehle",
+    film_runtime: "84 min",
+    film_country: "United Kingdom",
+    film_language: "English, Welsh",
+    film_imdb_id: "tt7557108",
     event_type: "discussion",
-    price: 0,
-    created_at: "2025-09-22T08:00:00",
+    price: "0.00",
+    created_at: "2025-09-22 08:00:00",
   },
   {
     title: "Mandy (discussion)",
@@ -100,9 +155,18 @@ module.exports = [
     film_year: 2018,
     film_img_url:
       "https://m.media-amazon.com/images/M/MV5BZGI1NTNhNzctOTk4OC00N2RjLTkwYTgtOGMwMWFjMzM5ZjNiXkEyXkFqcGc@._V1_SX300.jpg",
+    film_writer: "Panos Cosmatos, Aaron Stewart-Ahn, Casper Kelly",
+    film_plot:
+      "The enchanted lives of a couple in a secluded forest are brutally shattered by a nightmarish hippie cult and their demon-biker henchmen, propelling a man into a spiraling, surreal rampage of vengeance.",
+    film_genre: "Action, Fantasy, Horror",
+    film_actors: "Nicolas Cage, Andrea Riseborough, Linus Roache",
+    film_runtime: "121 min",
+    film_country: "United Kingdom, Belgium, United States",
+    film_language: "English",
+    film_imdb_id: "tt6998518",
     event_type: "discussion",
-    price: 0,
-    created_at: "2025-09-22T08:00:00",
+    price: "0.00",
+    created_at: "2025-09-22 08:00:00",
   },
   {
     title: "2001: A Space Odyssey (discussion)",
@@ -115,9 +179,18 @@ module.exports = [
     film_year: 1968,
     film_img_url:
       "https://m.media-amazon.com/images/M/MV5BNjU0NDFkMTQtZWY5OS00MmZhLTg3Y2QtZmJhMzMzMWYyYjc2XkEyXkFqcGc@._V1_SX300.jpg",
+    film_writer: "Stanley Kubrick, Arthur C. Clarke",
+    film_plot:
+      "When a mysterious artifact is uncovered on the Moon, a spacecraft manned by two humans and one supercomputer is sent to Jupiter to find its origins.",
+    film_genre: "Adventure, Sci-Fi",
+    film_actors: "Keir Dullea, Gary Lockwood, William Sylvester",
+    film_runtime: "149 min",
+    film_country: "United Kingdom, United States",
+    film_language: "English, Russian, French",
+    film_imdb_id: "tt0062622",
     event_type: "discussion",
-    price: 0,
-    created_at: "2025-09-22T08:00:00",
+    price: "0.00",
+    created_at: "2025-09-22 08:00:00",
   },
   {
     title: "Chungking Express (screening)",
@@ -130,8 +203,17 @@ module.exports = [
     film_year: 1994,
     film_img_url:
       "https://m.media-amazon.com/images/M/MV5BNDQ4ZmYxODctZDVlZC00OTcxLWJjOGItZjRlMzk4MDA1Yjg1XkEyXkFqcGc@._V1_SX300.jpg",
+    film_writer: "Wong Kar-Wai",
+    film_plot:
+      "Two melancholic Hong Kong policemen fall in love: one with a mysterious female underworld figure, the other with a beautiful and ethereal waitress at a late-night restaurant he frequents.",
+    film_genre: "Comedy, Crime, Drama",
+    film_actors: "Brigitte Lin, Takeshi Kaneshiro, Tony Leung Chiu-wai",
+    film_runtime: "102 min",
+    film_country: "Hong Kong",
+    film_language: "Cantonese, Mandarin",
+    film_imdb_id: "tt0109424",
     event_type: "screening",
-    price: 10,
-    created_at: "2025-09-22T08:00:00",
+    price: "10.00",
+    created_at: "2025-09-22 08:00:00",
   },
 ];
