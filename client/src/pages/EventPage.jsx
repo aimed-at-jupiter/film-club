@@ -29,7 +29,7 @@ function EventPage() {
   if (!event) return <p>No event found.</p>;
 
   return (
-    <div className="container mt-4">
+    <div className="container mt-3">
       <DetailedEventCard event={event} />
     </div>
   );

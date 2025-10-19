@@ -73,3 +73,17 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.film-info-transition {
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-5px);
+  transition: all 0.4s ease;
+}
+
+.film-info-transition.show {
+  max-height: 500px; /* enough for the content */
+  opacity: 1;
+  transform: translateY(0);
+}

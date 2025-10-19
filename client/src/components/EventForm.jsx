@@ -90,16 +90,25 @@ function EventForm({ onSubmit, loading, success }) {
       <h4 className="mb-4 text-center">Create New Event</h4>
 
       <div className="mb-4">
-        <label className="form-label">Film Title</label>
-        <div className="input-group">
+        <label className="form-label">Search OMDb</label>
+        <div className="input-group mb-2">
           <input
             type="text"
             className="form-control"
             name="film_title"
             value={formData.film_title}
             onChange={handleChange}
-            placeholder="Enter film title"
+            placeholder="Film Title"
             required
+          />
+          <input
+            type="number"
+            className="form-control"
+            name="film_year"
+            value={formData.film_year}
+            onChange={handleChange}
+            placeholder="Year"
+            style={{ maxWidth: "120px" }}
           />
           <button
             type="button"
@@ -114,12 +123,16 @@ function EventForm({ onSubmit, loading, success }) {
                 aria-hidden="true"
               ></span>
             ) : (
-              "Search OMDb"
+              "Search"
             )}
           </button>
         </div>
+        <small className="text-muted">
+          Search by title, or by title and year for better accuracy.
+        </small>
         {omdbError && <div className="text-danger mt-1">{omdbError}</div>}
       </div>
+
       <h5 className="mt-4 mb-3 border-bottom pb-2">Film Details</h5>
 
       {formData.film_img_url && (
@@ -134,7 +147,6 @@ function EventForm({ onSubmit, loading, success }) {
       )}
 
       {[
-        "film_year",
         "film_director",
         "film_writer",
         "film_genre",
@@ -169,14 +181,23 @@ function EventForm({ onSubmit, loading, success }) {
       ))}
 
       <h5 className="mt-4 mb-3 border-bottom pb-2">Event Details</h5>
-      {[
-        "event_type",
-        "date",
-        "start_time",
-        "end_time",
-        "location",
-        "price",
-      ].map((key) => (
+
+      <div className="mb-3">
+        <label className="form-label">Event Type</label>
+        <select
+          className="form-select"
+          name="event_type"
+          value={formData.event_type}
+          onChange={handleChange}
+          required
+          disabled={loading || success}
+        >
+          <option value="discussion">Discussion</option>
+          <option value="screening">Screening</option>
+        </select>
+      </div>
+
+      {["date", "start_time", "end_time", "location", "price"].map((key) => (
         <div className="mb-3" key={key}>
           <label className="form-label text-capitalize">
             {key.replace(/_/g, " ")}

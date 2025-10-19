@@ -9,7 +9,7 @@ function EventCard({ event }) {
       style={{ cursor: "pointer" }}
     >
       <div
-        className="card mb-3 border-0 shadow-sm hover-shadow transition-all"
+        className="card mb-3 border-0 h-100 shadow-sm hover-shadow transition-all"
         style={{ maxWidth: "540px", transition: "border-color 0.2s ease" }}
       >
         <div className="row g-0">
