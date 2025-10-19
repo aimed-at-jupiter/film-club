@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { postEvent } from "../api/postEvent";
 import EventForm from "../components/EventForm";
+import ErrorAlert from "../components/ErrorAlert";
 
 function PostEventPage() {
   const { user, token } = useAuth();
@@ -12,7 +13,11 @@ function PostEventPage() {
   const [error, setError] = useState(null);
 
   if (!user || user.role !== "staff") {
-    return <p className="text-center mt-5">Unauthorized: Staff only.</p>;
+    return (
+      <p className="text-center mt-5" role="alert" aria-live="assertive">
+        Unauthorized: Staff only.
+      </p>
+    );
   }
 
   const handleSubmit = (formData) => {
@@ -35,9 +40,9 @@ function PostEventPage() {
   };
 
   return (
-    <div className="container mt-5" style={{ maxWidth: "600px" }}>
+    <div className="container mt-5" style={{ maxWidth: "800px" }}>
       {error && (
-        <div className="alert alert-danger text-center mb-3">{error}</div>
+        <ErrorAlert message={error} onRetry={() => window.location.reload()} />
       )}
       <EventForm onSubmit={handleSubmit} loading={loading} success={success} />
     </div>

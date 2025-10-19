@@ -13,7 +13,7 @@ function LoginForm({ onSubmit, loading }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(formData); // delegate login logic to context
+    onSubmit(formData);
   };
 
   return (
@@ -54,6 +54,7 @@ function LoginForm({ onSubmit, loading }) {
         type="submit"
         className="btn btn-primary w-100"
         disabled={loading}
+        aria-busy={loading}
       >
         {loading ? "Logging in..." : "Log In"}{" "}
       </button>

@@ -29,7 +29,7 @@ function RegisterForm({ onSubmit, loading }) {
           className="form-control"
           id="username"
           name="username"
-          value={formData.name}
+          value={formData.username}
           onChange={handleChange}
           required
           disabled={loading}
@@ -72,6 +72,7 @@ function RegisterForm({ onSubmit, loading }) {
         type="submit"
         className="btn btn-primary w-100"
         disabled={loading}
+        aria-busy={loading}
       >
         {loading ? "Creating Account..." : "Register"}
       </button>
