@@ -16,7 +16,7 @@ const postSignup = (request, response, next) => {
 };
 
 const getUserSignups = (request, response, next) => {
-  const user_id = request.user.user_id;
+  const user_id = request.user.id;
 
   fetchSignupsByUser(user_id)
     .then((signups) => {

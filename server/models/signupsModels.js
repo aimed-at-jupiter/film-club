@@ -2,7 +2,7 @@ const db = require("../db/connection");
 
 const fetchSignupsByUser = (user_id) => {
   const query = `
-    SELECT s.signup_id, s.event_id, e.film_title, e.date, e.event_type, e.location
+    SELECT s.signup_id, s.event_id, e.film_title, e.date, e.event_type, e.location, e.film_img_url
     FROM signups s
     JOIN events e ON s.event_id = e.event_id
     WHERE s.user_id = $1
