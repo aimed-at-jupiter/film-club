@@ -29,7 +29,7 @@ function MyEventsPage() {
   return (
     <div className="container mt-4">
       <h3 className="mb-3 text-center">
-        {user ? `${user.username}'s Events` : "My Events"}
+        {user ? `${user.username}'s events` : "My Events"}
       </h3>
 
       {signups.length === 0 ? (

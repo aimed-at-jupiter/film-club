@@ -41,7 +41,12 @@ function HomePage() {
       });
   }, []);
 
+  const now = new Date();
+
   const filteredEvents = events.filter((event) => {
+    const eventDate = new Date(event.date);
+    if (user?.role !== "staff" && eventDate < now) return false;
+
     if (filter === "all") return true;
     return event.event_type.toLowerCase() === filter;
   });
