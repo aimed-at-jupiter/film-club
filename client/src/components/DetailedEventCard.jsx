@@ -72,7 +72,7 @@ function DetailedEventCard({ event }) {
 
   return (
     <div
-      className="card shadow-sm mb-3 border-0"
+      className="mb-3 border-0"
       style={{ maxWidth: "1080px", transition: "none" }}
     >
       <div className="row g-0">
@@ -87,7 +87,7 @@ function DetailedEventCard({ event }) {
 
         <div className="col-md-8">
           <div className="card-body">
-            <h5 className="card-title fw-bold">{event.film_title}</h5>
+            <h1 className="card-title fw-bold">{event.film_title}</h1>
             <p className="card-text">
               Join us for a {event.event_type} of the {event.film_year} film{" "}
               <em>{event.film_title}</em> by {event.film_director}.
@@ -173,6 +173,8 @@ function DetailedEventCard({ event }) {
                             className="spinner-border spinner-border-sm"
                             role="status"
                             aria-hidden="true"
+                            aria-live="polite"
+                            aria-label="Loading"
                           ></span>
                           Loading...
                         </>

@@ -19,26 +19,31 @@ function HomePage() {
     };
     window.addEventListener("setFilter", handleFilterChange);
     return () => window.removeEventListener("setFilter", handleFilterChange);
-  }, []);
+  }, [setFilter]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
     const filterParam = params.get("filter");
     if (filterParam) setFilter(filterParam);
-  }, [location.search]);
+  }, [location.search, setFilter]);
 
-  useEffect(() => {
+  const fetchEvents = () => {
     setLoading(true);
+    setError(null);
+
     getEvents()
       .then((events) => {
         setEvents(events);
-        setLoading(false);
       })
       .catch((err) => {
         console.error(err, "<<< error from getEvents");
         setError(err.msg || "Failed to fetch events");
-        setLoading(false);
-      });
+      })
+      .finally(() => setLoading(false));
+  };
+
+  useEffect(() => {
+    fetchEvents();
   }, []);
 
   const now = new Date();
@@ -52,28 +57,53 @@ function HomePage() {
   });
 
   if (loading)
-    return <div className="spinner-border text-primary" role="status"></div>;
-  if (error) return <p className="text-danger">{error}</p>;
-  if (!filteredEvents.length) return <p>No events found.</p>;
+    return (
+      <div
+        className="d-flex flex-column align-items-center mt-5"
+        role="status"
+        aria-live="polite"
+      >
+        <div
+          className="spinner-border text-primary"
+          role="status"
+          aria-label="Loading events"
+        ></div>
+        <p className="mt-3">Loading events, please wait…</p>
+      </div>
+    );
+
+  if (error) {
+    return <ErrorAlert message={error} onRetry={fetchEvents} />;
+  }
+
+  if (!filteredEvents.length) {
+    return (
+      <p className="text-center mt-5" role="status" aria-live="polite">
+        No {filter !== "all" ? filter : ""} events found
+      </p>
+    );
+  }
 
   return (
-    <div className="container mt-4">
-      {user ? (
-        <h3 className="mb-3 text-center">
-          Welcome back, {user.username || user.email}!
-        </h3>
-      ) : (
-        <h3 className="mb-3 text-center">Welcome to Film Club!</h3>
-      )}
+    <main className="container mt-4" role="main">
+      <h3 className="mb-3 text-center" tabIndex="-1" aria-live="polite">
+        {user
+          ? `Welcome back, ${user.username || user.email}!`
+          : "Welcome to Film Club!"}
+      </h3>
 
-      <div className="row">
+      <div className="row" aria-label="List of upcoming events">
         {filteredEvents.map((event) => (
           <div className="col-md-4 mb-4" key={event.event_id}>
             <EventCard event={event} />
           </div>
         ))}
       </div>
-    </div>
+
+      <div className="visually-hidden" aria-live="polite">
+        Showing {filter} events
+      </div>
+    </main>
   );
 }
 
