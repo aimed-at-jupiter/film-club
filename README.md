@@ -99,11 +99,7 @@ Runs Jest integration tests for database and API endpoints
 | **POST** | `/api/auth/login` | Public | Log in and receive a JWT token |
 | **GET** | `/api/omdb` | Staff only | Retrieve film data from the OMDb API for event enrichment |
 
-Deployment Notes
-
-Frontend (Netlify) automatically builds from /client
-Backend (Render) deploys from /server, using npm start
-Environment variables for production must be set in both Render and Netlify dashboards
-The backend CLIENT_URL must match your deployed Netlify domain to avoid CORS issues
+Additional Notes
+I'm not yet verified by Google to use their calendar API publicly, but I have still included the code and can provide access to anyone wanting to test the functionality of full Google calendar API integration, just drop me a dm :)
 
 Uses OMDb API for film metadata.
