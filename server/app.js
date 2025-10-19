@@ -18,7 +18,12 @@ const { requireAuth, requireStaff } = require("./middleware/auth");
 
 const app = express();
 
-app.use(cors());
+app.use(
+  cors({
+    origin: ["https://68f4fb2b2b05ff712b4b1302--jupiter-film-club.netlify.app"],
+    credentials: true,
+  })
+);
 
 app.use(express.json());
 
