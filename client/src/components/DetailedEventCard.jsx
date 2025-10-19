@@ -10,6 +10,7 @@ import { getUserSignups } from "../api/getUserSignups";
 function DetailedEventCard({ event }) {
   const { user, token } = useAuth();
   const { addEventToCalendar } = useGoogleCalendar();
+
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState(null);
@@ -25,7 +26,7 @@ function DetailedEventCard({ event }) {
       })
       .catch((err) => {
         console.error("Signup failed:", err);
-        setError(err.msg);
+        setError(err.msg || "Signup failed. Please try again.");
       })
       .finally(() => {
         setLoading(false);
@@ -71,9 +72,11 @@ function DetailedEventCard({ event }) {
   };
 
   return (
-    <div
+    <main
       className="mb-3 border-0"
       style={{ maxWidth: "1080px", transition: "none" }}
+      role="region"
+      aria-label={`Details for ${event.film_title}`}
     >
       <div className="row g-0">
         <div className="col-md-4">
@@ -103,69 +106,63 @@ function DetailedEventCard({ event }) {
             <button
               className="btn btn-outline-secondary btn-sm"
               onClick={() => setShowMore(!showMore)}
+              aria-expanded={showMore}
+              aria-controls="film-info"
             >
               {showMore ? "Hide Film Info ▲" : "Show More Info ▼"}
             </button>
 
             <div
+              id="film-info"
               className={`film-info-transition ${
                 showMore ? "show" : "hide"
               } mt-3 border-top pt-2`}
             >
-              <div className="film-info-content">
-                {event.film_plot && (
-                  <p className="text-start mb-1">
-                    <strong>Plot:</strong> {event.film_plot}
-                  </p>
-                )}
-                {event.film_genre && (
-                  <p className="text-start mb-1">
-                    <strong>Genre:</strong> {event.film_genre}
-                  </p>
-                )}
-                {event.film_writer && (
-                  <p className="text-start mb-1">
-                    <strong>Writer:</strong> {event.film_writer}
-                  </p>
-                )}
-                {event.film_actors && (
-                  <p className="text-start mb-1">
-                    <strong>Lead Actors:</strong> {event.film_actors}
-                  </p>
-                )}
-                {event.film_runtime && (
-                  <p className="text-start mb-1">
-                    <strong>Runtime:</strong> {event.film_runtime}
-                  </p>
-                )}
-                {event.film_country && (
-                  <p className="text-start mb-1">
-                    <strong>Country:</strong> {event.film_country}
-                  </p>
-                )}
-                {event.film_language && (
-                  <p className="text-start mb-1">
-                    <strong>Language:</strong> {event.film_language}
-                  </p>
-                )}
-              </div>
+              {[
+                { label: "Plot", value: event.film_plot },
+                { label: "Genre", value: event.film_genre },
+                { label: "Writer", value: event.film_writer },
+                { label: "Lead Actors", value: event.film_actors },
+                { label: "Runtime", value: event.film_runtime },
+                { label: "Country", value: event.film_country },
+                { label: "Language", value: event.film_language },
+              ].map(
+                (info) =>
+                  info.value && (
+                    <p className="text-start mb-1" key={info.label}>
+                      <strong>{info.label}:</strong> {info.value}
+                    </p>
+                  )
+              )}
             </div>
 
+            {error && (
+              <div
+                className="alert alert-danger mt-2 py-1"
+                role="alert"
+                aria-live="assertive"
+              >
+                {error}
+              </div>
+            )}
+
             {user ? (
-              <div className="d-grid gap-2 d-md-block">
+              <div className="d-grid gap-2 d-md-block mt-3">
                 <>
                   {event.price > 0 ? (
                     <button
                       className="btn btn-primary me-md-2"
                       onClick={handlePayNow}
+                      aria-busy={loading}
                     >
-                      Buy Ticket
+                      {loading ? "Processing..." : "Buy Ticket"}
                     </button>
                   ) : (
                     <button
                       className="btn btn-primary me-md-2"
                       onClick={handleSignup}
                       disabled={loading || success}
+                      aria-busy={loading}
                     >
                       {loading ? (
                         <>
@@ -190,6 +187,7 @@ function DetailedEventCard({ event }) {
                     className="btn btn-primary"
                     onClick={handleAddToCalendar}
                     disabled={!success}
+                    aria-disabled={!success}
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title={
@@ -212,15 +210,15 @@ function DetailedEventCard({ event }) {
               </p>
             )}
 
-            {success && <p className="text-success mt-2">You’re signed up!</p>}
-
-            {error && (
-              <div className="alert alert-danger mt-2 py-1">{error}</div>
+            {success && (
+              <p className="text-success mt-2" aria-live="polite">
+                You’re signed up!
+              </p>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 }
 
