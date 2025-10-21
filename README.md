@@ -141,6 +141,6 @@ This implementation avoids the need for OAuth authentication and sensitive scope
 * If they are not signed in, Google will first redirect them to the login page.
 * After signing in, users may need to **click the “Add to Google Calendar” button again** to open the event.
 
-⠀This design was chosen intentionally to maintain full functionality without requiring app verification or OAuth consent screens, while still delivering a smooth experience for most users.
+This design was chosen intentionally to maintain full functionality without requiring app verification or OAuth consent screens, while still delivering a smooth experience for most users. Whilst I initially implemented the use of Google calendar API, as of August 28, 2025, Google requires that apps requesting sensitive OAuth scopes undergo an extensive verification process before they can access user data in production capacity. This means that only users listed as test users in your Google Cloud project's OAuth consent screen can authorize the app during development and testing.
 
 Please feel free to drop me a message if you have any questions!
