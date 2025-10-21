@@ -17,6 +17,32 @@ Authentication: JSON Web Tokens (JWT)
 Payments: Stripe Checkout (test and live keys supported)
 Calendar Integration: Google Calendar URL method (no OAuth required)
 Hosting: Render (API) & Netlify (client)
+Uses OMDb API for film metadata.
+
+🔑 Signup & API key setup
+### OMDb
+1 Visit: https://www.omdbapi.com/apikey.aspx
+2 Signup for a free developer key.
+3 Put it into /server/.env.development as OMDB_API_KEY.
+
+⠀Stripe
+1 Create a Stripe account at ~[https://stripe.com](https://stripe.com/)~
+2 In the Dashboard → Developers → API keys:
+	* Copy **Publishable key** → add to /client/.env.local as VITE_STRIPE_PUBLIC_KEY
+	* Copy **Secret key** → add to /server/.env.development as STRIPE_SECRET_KEY
+3 Toggle **“View test data”** in Stripe Dashboard to run test transactions.
+
+# 💳 How to test payments (including on hosted site)
+* Ensure your Stripe keys are **test keys** (prefix pk_test_ / sk_test_) for testing.
+* Use Stripe’s test card for Checkout:
+
+⠀
+Card number: 4242 4242 4242 4242
+Expiry: any future date
+CVC: any 3 digits
+Name: any name (eg. Jane Doe)
+email: any email (test@example.com will work)
+
 
 ⚙️ Running Locally
 
@@ -38,7 +64,7 @@ npm install
    setup-dbs creates the required databases (development, test).
    seed populates them with sample users, events, and signups.
 
-4. Environment variables
+4. Create environment variables (make sure you add .env* to your .gitignore)
    🗄️ Server (/server/.env.development)
 
 DATABASE_URL=postgres://localhost:5432/film_club
@@ -99,7 +125,13 @@ Runs Jest integration tests for database and API endpoints
 | **POST** | `/api/auth/login` | Public | Log in and receive a JWT token |
 | **GET** | `/api/omdb` | Staff only | Retrieve film data from the OMDb API for event enrichment |
 
-Additional Notes
-I'm not yet verified by Google to use their calendar API publicly, but I have still included the code and can provide access to anyone wanting to test the functionality of full Google calendar API integration, just drop me a dm :)
+🗓️ Google Calendar Integration — Technical Note
+This application provides a quick way for users to add Film Club events to their Google Calendar using a pre-filled **Google Calendar event link**. When clicked, the button opens a new tab with all event details pre-populated in Google Calendar, allowing the user to confirm and save the event manually.
+This implementation avoids the need for OAuth authentication and sensitive scope verification by Google, offering a lightweight and privacy-friendly solution. However, this also means:
+* Users **must already be signed into Google** in their browser session.
+* If they are not signed in, Google will first redirect them to the login page.
+* After signing in, users may need to **click the “Add to Google Calendar” button again** to open the event.
 
-Uses OMDb API for film metadata.
+⠀This design was chosen intentionally to maintain full functionality without requiring app verification or OAuth consent screens, while still delivering a smooth experience for most users.
+
+Please feel free to drop me a message if you have any questions!
