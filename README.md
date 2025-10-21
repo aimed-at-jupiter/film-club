@@ -11,13 +11,13 @@ Users can sign up, purchase tickets securely via Stripe, and add events directly
 | **Database (Supabase PostgreSQL)** | Hosted (production only) |
 
 Overview
-Frontend: React + Vite + Bootstrap
-Backend: Node.js + Express + PostgreSQL (via Supabase in production)
-Authentication: JSON Web Tokens (JWT)
-Payments: Stripe Checkout (test and live keys supported)
-Calendar Integration: Google Calendar URL method (no OAuth required)
-Hosting: Render (API) & Netlify (client)
-Uses OMDb API for film metadata.
+- Frontend: React + Vite + Bootstrap
+- Backend: Node.js + Express + PostgreSQL (via Supabase in production)
+- Authentication: JSON Web Tokens (JWT)
+- Payments: Stripe Checkout (test and live keys supported)
+- Calendar Integration: Google Calendar URL method (no OAuth required)
+- Hosting: Render (API) & Netlify (client)
+- Uses OMDb API for film metadata.
 
 🔑 Signup & API key setup
 ### OMDb
@@ -67,18 +67,18 @@ npm install
 4. Create environment variables (make sure you add .env* to your .gitignore)
    🗄️ Server (/server/.env.development)
 
-DATABASE_URL=postgres://localhost:5432/film_club
-JWT_SECRET=your_jwt_secret
-OMDB_API_KEY=your_omdb_api_key
-STRIPE_SECRET_KEY=your_stripe_test_secret
-CLIENT_URL=http://localhost:5173
+- DATABASE_URL=postgres://localhost:5432/film_club
+- JWT_SECRET=your_jwt_secret
+- OMDB_API_KEY=your_omdb_api_key
+- STRIPE_SECRET_KEY=your_stripe_test_secret
+- CLIENT_URL=http://localhost:5173
 
 For production (.env.production), replace these with live keys and URLs.
 
 💻 Client (/client/.env.local)
 
-VITE_API_URL=http://localhost:9090
-VITE_STRIPE_PUBLIC_KEY=your_stripe_test_public_key
+- VITE_API_URL=http://localhost:9090
+- VITE_STRIPE_PUBLIC_KEY=your_stripe_test_public_key
 
 For deployment (.env.production), replace with your live API URL and keys.
 
