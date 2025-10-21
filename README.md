@@ -135,12 +135,15 @@ Runs Jest integration tests for database and API endpoints
 | **GET** | `/api/omdb` | Staff only | Retrieve film data from the OMDb API for event enrichment |
 
 🗓️ Google Calendar Integration — Technical Note
+
 This application provides a quick way for users to add Film Club events to their Google Calendar using a pre-filled **Google Calendar event link**. When clicked, the button opens a new tab with all event details pre-populated in Google Calendar, allowing the user to confirm and save the event manually.
 This implementation avoids the need for OAuth authentication and sensitive scope verification by Google, offering a lightweight and privacy-friendly solution. However, this also means:
 * Users **must already be signed into Google** in their browser session.
 * If they are not signed in, Google will first redirect them to the login page.
 * After signing in, users may need to **click the “Add to Google Calendar” button again** to open the event.
 
-This design was chosen intentionally to maintain full functionality without requiring app verification or OAuth consent screens, while still delivering a smooth experience for most users. Whilst I initially implemented the use of Google calendar API, as of August 28, 2025, Google requires that apps requesting sensitive OAuth scopes undergo an extensive verification process before they can access user data in production capacity. This means that only users listed as test users in your Google Cloud project's OAuth consent screen can authorize the app during development and testing.
+This design was chosen intentionally to maintain full functionality without requiring app verification or OAuth consent screens, while still delivering a smooth experience for most users. Whilst I initially implemented the use of Google calendar API, **as of August 28, 2025, Google requires that apps requesting sensitive OAuth scopes undergo an extensive verification process before they can access user data in production capacity**. This means that only users listed as test users in your Google Cloud project's OAuth consent screen can authorize the app during development and testing. 
+
+I have decided to leave the code for Google Calendar API integration in (although not currently being used) so you can see how I would handle that level of functionality.
 
 Please feel free to drop me a message if you have any questions!
