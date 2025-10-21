@@ -1,4 +1,4 @@
-🎬 Film Club
+🎬 **Film Club**
 
 Film Club is a full-stack event management platform for hosting and attending film screenings and discussions.
 Users can sign up, purchase tickets securely via Stripe, and add events directly to their Google Calendar.
@@ -6,11 +6,11 @@ Users can sign up, purchase tickets securely via Stripe, and add events directly
 🌐 Hosted Project
 | Service | URL |
 | ---------------------------------- | -------------------------------------------------------------------------------------- |
-| **Frontend (Netlify)** | [https://jupiter-film-club.netlify.app](https://jupiter-film-club.netlify.app) |
-| **Backend (Render)** | [https://film-club-9zsg.onrender.com](https://film-club-9zsg.onrender.com) |
-| **Database (Supabase PostgreSQL)** | Hosted (production only) |
+| Frontend (Netlify) | [https://jupiter-film-club.netlify.app](https://jupiter-film-club.netlify.app) |
+| Backend (Render) | [https://film-club-9zsg.onrender.com](https://film-club-9zsg.onrender.com) |
+| Database (Supabase PostgreSQL) | Hosted (production only) |
 
-Overview
+### Overview
 - Frontend: React + Vite + Bootstrap
 - Backend: Node.js + Express + PostgreSQL (via Supabase in production)
 - Authentication: JSON Web Tokens (JWT)
@@ -21,35 +21,44 @@ Overview
 
 🔑 Signup & API key setup
 ### OMDb
-1 Visit: https://www.omdbapi.com/apikey.aspx
-2 Signup for a free developer key.
-3 Put it into /server/.env.development as OMDB_API_KEY.
+1.	Visit: https://www.omdbapi.com/apikey.aspx
+2.	Signup for a free developer key.
+3.	Put it into /server/.env.development as OMDB_API_KEY.
 
-⠀Stripe
-1 Create a Stripe account at ~[https://stripe.com](https://stripe.com/)~
-2 In the Dashboard → Developers → API keys:
+### Stripe
+1.	 Create a Stripe account at ~[https://stripe.com](https://stripe.com/)
+2.	 In the Dashboard → Developers → API keys:
 	* Copy **Publishable key** → add to /client/.env.local as VITE_STRIPE_PUBLIC_KEY
 	* Copy **Secret key** → add to /server/.env.development as STRIPE_SECRET_KEY
-3 Toggle **“View test data”** in Stripe Dashboard to run test transactions.
+3.	 Toggle **“View test data”** in Stripe Dashboard to run test transactions.
 
-# 💳 How to test payments (including on hosted site)
+### 💳 How to test payments (including on hosted site)
 * Ensure your Stripe keys are **test keys** (prefix pk_test_ / sk_test_) for testing.
 * Use Stripe’s test card for Checkout:
 
 ⠀
-Card number: 4242 4242 4242 4242
-Expiry: any future date
-CVC: any 3 digits
-Name: any name (eg. Jane Doe)
-email: any email (test@example.com will work)
+### 💳 Stripe Test Card Details
+
+Use the following details to simulate a successful payment when testing checkout:
+
+| Field | Test Value |
+|:-|:-|
+| **Card Number** | `4242 4242 4242 4242` |
+| **Expiry Date** | Any future date (e.g. `12/34`) |
+| **CVC** | Any 3 digits (e.g. `123`) |
+| **Name** | Any name (e.g. `Jane Doe`) |
+| **Email** | Any valid email (e.g. `test@example.com`) |
+
+> 🧪 **Tip:** Payments made using this test card will not charge real money.  
+> You can safely use it in both local and live (test mode) environments.
 
 
-⚙️ Running Locally
+⚙️ **Running Locally**
 
-1. Clone the repo
+1. ### Clone the repo
    git clone https://github.com/aimed-at-jupiter/film-club
 
-2. Install dependencies
+2. ### Install dependencies
    Install dependencies in both directories:
    cd server
    npm install
@@ -57,15 +66,15 @@ email: any email (test@example.com will work)
 cd ../client
 npm install
 
-3. Database setup (local Postgres)
+3. ### Database setup (local Postgres)
    Make sure PostgreSQL is running locally, then from /server:
    npm run setup-dbs
    npm run seed
    setup-dbs creates the required databases (development, test).
    seed populates them with sample users, events, and signups.
 
-4. Create environment variables (make sure you add .env* to your .gitignore)
-   🗄️ Server (/server/.env.development)
+4. ### Create environment variables (make sure you add .env* to your .gitignore)
+   🗄️ **Server** (/server/.env.development)
 
 - DATABASE_URL=postgres://localhost:5432/film_club
 - JWT_SECRET=your_jwt_secret
@@ -75,14 +84,14 @@ npm install
 
 For production (.env.production), replace these with live keys and URLs.
 
-💻 Client (/client/.env.local)
+💻 **Client** (/client/.env.local)
 
 - VITE_API_URL=http://localhost:9090
 - VITE_STRIPE_PUBLIC_KEY=your_stripe_test_public_key
 
 For deployment (.env.production), replace with your live API URL and keys.
 
-5. Start the app
+5. ### Start the app
 Run both the server and client in separate terminals:
 
 Terminal 1 – backend
