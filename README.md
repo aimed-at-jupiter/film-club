@@ -59,21 +59,23 @@ Use the following details to simulate a successful payment when testing checkout
    git clone https://github.com/aimed-at-jupiter/film-club
 
 2. ### Install dependencies
-   Install dependencies in both directories:
+   Install dependencies in both directories by running the following commands in your terminal from the project root (/film-club):
+
+   first, change directory to the server directory and install dependencies by running:
+   ```
    cd server
    npm install
-
-cd ../client
-npm install
-
-3. ### Database setup (local Postgres)
-   Make sure PostgreSQL is running locally, then from /server:
-   npm run setup-dbs
-   npm run seed
-   setup-dbs creates the required databases (development, test).
-   seed populates them with sample users, events, and signups.
-
-4. ### Create environment variables (make sure you add .env* to your .gitignore)
+   ```
+   then change directory back to the root by running:
+   ```
+   cd ..
+   ```
+   and then change directory to the client and install the relevant dependencies there by running:
+   ```
+   cd client
+   npm install
+   ```
+3. ### Create environment variables (make sure you add .env* to your .gitignore)
    🗄️ **Server** (/server/.env.development)
 
 - DATABASE_URL=postgres://localhost:5432/film_club
@@ -91,28 +93,41 @@ For production (.env.production), replace these with live keys and URLs.
 
 For deployment (.env.production), replace with your live API URL and keys.
 
+4. ### Database setup (local Postgres)
+   Make sure PostgreSQL is running locally, then from /server:
+   npm run setup-dbs
+   npm run seed
+   setup-dbs creates the required databases (development, test).
+   seed populates them with sample users, events, and signups.
+
+
 5. ### Start the app
 Run both the server and client in separate terminals:
 
 Terminal 1 – backend
+from the project root (/film-club), run the following commands:
+```
 cd server
 npm run dev
-
+```
 Terminal 2 – frontend
+in the second terminal, from the root, run the following commands:
+```
 cd client
 npm run dev
-
+```
 Then open http://localhost:5173
 
 🧪 Testing
 To run automated backend tests:
+```
 cd server
 npm test
-
+```
 Seeds the test database automatically
 Runs Jest integration tests for database and API endpoints
 
-👩‍💻 Fake User Accounts
+👩‍💻 Fake Demo User Accounts
 | Role | Email | Password |
 | ----- | --------------------------------------------------------- | -------- |
 | Staff | [admin@filmclub.com](mailto:admin@filmclub.com) | admin123 |
@@ -136,7 +151,7 @@ Runs Jest integration tests for database and API endpoints
 
 🗓️ Google Calendar Integration — Technical Note
 
-This application provides a quick way for users to add Film Club events to their Google Calendar using a pre-filled **Google Calendar event link**. When clicked, the button opens a new tab with all event details pre-populated in Google Calendar, allowing the user to confirm and save the event manually.
+This application provides a quick way for users to add Film Club events to their Google Calendar using a pre-filled **Google Calendar event link**.  When clicked, the button opens a new tab with all event details pre-populated in Google Calendar, allowing the user to confirm and save the event manually.
 This implementation avoids the need for OAuth authentication and sensitive scope verification by Google, offering a lightweight and privacy-friendly solution. However, this also means:
 * Users **must already be signed into Google** in their browser session.
 * If they are not signed in, Google will first redirect them to the login page.
