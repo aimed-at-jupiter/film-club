@@ -56,9 +56,12 @@ Use the following details to simulate a successful payment when testing checkout
 ⚙️ **Running Locally**
 
 1. ### Clone the repo
-   git clone https://github.com/aimed-at-jupiter/film-club
+   In your terminal, navigate to where you would like to install the app, then run:
+   ```
+   git clone https://github.com/aimed-at-jupiter/film-club.git
+   ```
 
-2. ### Install dependencies
+4. ### Install dependencies
    Install dependencies in both directories by running the following commands in your terminal from the project root (/film-club):
 
    first, change directory to the server directory and install dependencies by running:
@@ -75,7 +78,7 @@ Use the following details to simulate a successful payment when testing checkout
    cd client
    npm install
    ```
-3. ### Create environment variables (make sure you add .env* to your .gitignore)
+6. ### Create environment variables (make sure you add .env* to your .gitignore)
 1. Create two `.env` files in the server directory:
 
    - `.env.development` for the development database
@@ -84,21 +87,21 @@ Use the following details to simulate a successful payment when testing checkout
 2. Add the following variables to each file:
    🗄️ **Server**  
    (/server/.env.development)
-```env
-PGDATABASE=film_club
-JWT_SECRET=your_jwt_secret
-OMDB_API_KEY=your_omdb_api_key
-STRIPE_SECRET_KEY=your_stripe_secret_key
-CLIENT_URL=http://localhost:5173
-```
+	```env
+	PGDATABASE=film_club
+	JWT_SECRET=your_jwt_secret
+	OMDB_API_KEY=your_omdb_api_key
+	STRIPE_SECRET_KEY=your_stripe_secret_key
+	CLIENT_URL=http://localhost:5173
+	```
 (/server/.env.test)
-```env
-PGDATABASE=film_club_test
-JWT_SECRET=your_jwt_test_secret
-OMDB_API_KEY=your_omdb_api_key
-STRIPE_SECRET_KEY=your_stripe_secret_key
-CLIENT_URL=http://localhost:5173
-```
+	```env
+	PGDATABASE=film_club_test
+	JWT_SECRET=your_jwt_test_secret
+	OMDB_API_KEY=your_omdb_api_key
+	STRIPE_SECRET_KEY=your_stripe_secret_key
+	CLIENT_URL=http://localhost:5173
+	```
 
 add `.env.*` to your server/.gitignore file
 
@@ -108,10 +111,10 @@ Create one `.env` file in the client directory:
 
 💻 **Client**  
 (/client/.env.local)
-```env
-VITE_API_URL=http://localhost:9090/api
-VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
-```
+	```env
+	VITE_API_URL=http://localhost:9090/api
+	VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
+	```
 
 add `.env.*` to your client/.gitignore file  
 
@@ -136,24 +139,24 @@ Run both the server and client in separate terminals:
 
 Terminal 1 – backend
 from the project root (/film-club), run the following commands:
-```
-cd server
-npm run dev
-```
+	```
+	cd server
+	npm run dev
+	```
 Terminal 2 – frontend
 in the second terminal, from the root, run the following commands:
-```
-cd client
-npm run dev
-```
+	```
+	cd client
+	npm run dev
+	```
 Then open http://localhost:5173
 
 🧪 Testing
 To run automated backend tests:
-```
-cd server
-npm test
-```
+	```
+	cd server
+	npm test
+	```
 Seeds the test database automatically
 Runs Jest integration tests for database and API endpoints
 
