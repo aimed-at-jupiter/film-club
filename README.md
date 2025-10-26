@@ -76,32 +76,62 @@ Use the following details to simulate a successful payment when testing checkout
    npm install
    ```
 3. ### Create environment variables (make sure you add .env* to your .gitignore)
-   🗄️ **Server** (/server/.env.development)
+1. Create two `.env` files in the server directory:
 
-- DATABASE_URL=postgres://localhost:5432/film_club
-- JWT_SECRET=your_jwt_secret
-- OMDB_API_KEY=your_omdb_api_key
-- STRIPE_SECRET_KEY=your_stripe_test_secret
-- CLIENT_URL=http://localhost:5173
+   - `.env.development` for the development database
+   - `.env.test` for the test database
 
-For production (.env.production), replace these with live keys and URLs.
+2. Add the following variables to each file:
+   🗄️ **Server**  
+   (/server/.env.development)
+```env
+PGDATABASE=film_club
+JWT_SECRET=your_jwt_secret
+OMDB_API_KEY=your_omdb_api_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+CLIENT_URL=http://localhost:5173
+```
+(/server/.env.test)
+```env
+PGDATABASE=film_club_test
+JWT_SECRET=your_jwt_test_secret
+OMDB_API_KEY=your_omdb_api_key
+STRIPE_SECRET_KEY=your_stripe_secret_key
+CLIENT_URL=http://localhost:5173
+```
 
-💻 **Client** (/client/.env.local)
+add `.env.*` to your server/.gitignore file
 
-- VITE_API_URL=http://localhost:9090
-- VITE_STRIPE_PUBLIC_KEY=your_stripe_test_public_key
+Create one `.env` file in the client directory:
 
-For deployment (.env.production), replace with your live API URL and keys.
+   - `.env.local`
+
+💻 **Client**  
+(/client/.env.local)
+```env
+VITE_API_URL=http://localhost:9090/api
+VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
+```
+
+add `.env.*` to your client/.gitignore file  
+
+NOTE: this app is set to listen on port 9090. If you wish to use a different port, ensure you add '/api' to the end of your VITE_API_URL variable and also update the PORT variable in server/listen.js 
 
 4. ### Database setup (local Postgres)
-   Make sure PostgreSQL is running locally, then from /server:
+   Make sure PostgreSQL is running locally, then run the following commands from /server:
+   ```
    npm run setup-dbs
+   ```
+   then run:
+   ```
    npm run seed
+   ```
+   
    setup-dbs creates the required databases (development, test).
    seed populates them with sample users, events, and signups.
 
 
-5. ### Start the app
+6. ### Start the app
 Run both the server and client in separate terminals:
 
 Terminal 1 – backend
