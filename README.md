@@ -3,12 +3,8 @@
 Film Club is a full-stack event management platform for hosting and attending film screenings and discussions.
 Users can sign up, purchase tickets securely via Stripe, and add events directly to their Google Calendar.
 
-🌐 Hosted Project
-| Service | URL |
-| ---------------------------------- | -------------------------------------------------------------------------------------- |
-| Frontend (Netlify) | [https://jupiter-film-club.netlify.app](https://jupiter-film-club.netlify.app) |
-| Backend (Render) | [https://film-club-9zsg.onrender.com](https://film-club-9zsg.onrender.com) |
-| Database (Supabase PostgreSQL) | Hosted (production only) |
+🌐 Live Demo
+[https://jupiter-film-club.netlify.app](https://jupiter-film-club.netlify.app)
 
 ### Overview
 - Frontend: React + Vite + Bootstrap
