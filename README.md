@@ -15,7 +15,7 @@ Users can sign up, purchase tickets securely via Stripe, and add events directly
 - Hosting: Render (API) & Netlify (client)
 - Uses OMDb API for film metadata.
 
-🔑 Signup & API key setup
+## 🔑 Signup & API key setup
 ### OMDb
 1.	Visit: https://www.omdbapi.com/apikey.aspx
 2.	Signup for a free developer key.
@@ -28,12 +28,11 @@ Users can sign up, purchase tickets securely via Stripe, and add events directly
 	* Copy **Secret key** → add to /server/.env.development as STRIPE_SECRET_KEY
 3.	 Toggle **“View test data”** in Stripe Dashboard to run test transactions.
 
-### 💳 How to test payments (including on hosted site)
+### How to test payments (including on hosted site)
 * Ensure your Stripe keys are **test keys** (prefix pk_test_ / sk_test_) for testing.
 * Use Stripe’s test card for Checkout:
 
-⠀
-### 💳 Stripe Test Card Details
+#### 💳 Stripe Test Card Details
 
 Use the following details to simulate a successful payment when testing checkout:
 
@@ -49,15 +48,15 @@ Use the following details to simulate a successful payment when testing checkout
 > You can safely use it in both local and live (test mode) environments.
 
 
-⚙️ **Running Locally**
+## Running Locally
 
-1. ### Clone the repo
+### 1. Clone the repo
    In your terminal, navigate to where you would like to install the app, then run:
    ```
    git clone https://github.com/aimed-at-jupiter/film-club.git
    ```
 
-4. ### Install dependencies
+### 2. Install dependencies
    Install dependencies in both directories by running the following commands in your terminal from the project root (/film-club):
 
    first, change directory to the server directory and install dependencies by running:
@@ -74,49 +73,73 @@ Use the following details to simulate a successful payment when testing checkout
    cd client
    npm install
    ```
-6. ### Create environment variables (make sure you add .env* to your .gitignore)
-1. Create two `.env` files in the server directory:
+ ### 3. Create environment variables (make sure you add .env* to your .gitignore)
 
-   - `.env.development` for the development database
-   - `.env.test` for the test database
+ 🗄️ **Server**  
+   Create two `.env` files in the server directory:
 
-2. Add the following variables to each file:
-   🗄️ **Server**  
-   (/server/.env.development)
-	```env
-	PGDATABASE=film_club
-	JWT_SECRET=your_jwt_secret
-	OMDB_API_KEY=your_omdb_api_key
-	STRIPE_SECRET_KEY=your_stripe_secret_key
-	CLIENT_URL=http://localhost:5173
-	```
-(/server/.env.test)
-	```env
-	PGDATABASE=film_club_test
-	JWT_SECRET=your_jwt_test_secret
-	OMDB_API_KEY=your_omdb_api_key
-	STRIPE_SECRET_KEY=your_stripe_secret_key
-	CLIENT_URL=http://localhost:5173
-	```
+- `.env.development` for the development database
+- `.env.test` for the test database
+
+If you’re using VSCode, you can do this quickly by clicking the ‘new file’ button, or by clicking 
+‘file’ in the taskbar, then ‘new file’ and naming each file as stated above.
+
+alternatively you can run the following terminal commands from the project root
+```
+cd server
+touch .env.development
+touch .env.test
+```
+Then add the following variables to each file:
+
+  (/server/.env.development)
+  ```env
+  PGDATABASE=film_club
+  JWT_SECRET=your_jwt_secret
+  OMDB_API_KEY=your_omdb_api_key
+  STRIPE_SECRET_KEY=your_stripe_secret_key
+  CLIENT_URL=http://localhost:5173
+  ```
+ 
+ (/server/.env.test)
+  ```env
+  PGDATABASE=film_club_test
+  JWT_SECRET=your_jwt_test_secret
+  OMDB_API_KEY=your_omdb_api_key
+  STRIPE_SECRET_KEY=your_stripe_secret_key
+  CLIENT_URL=http://localhost:5173
+  ```
+
+You can directly copy and paste these blocks into each .env file, just ensure that you replace the JWT, OMDb and Stripe placeholder values with your own unique string of characters, your own OMDb API key and your own Stripe Secret Key respectively
 
 add `.env.*` to your server/.gitignore file
 
+💻 **Client**  
+
 Create one `.env` file in the client directory:
 
-   - `.env.local`
+- `.env.local`
 
-💻 **Client**  
+Again, you can do this by clicking the ‘new file’ button in VSCode, or by running the following terminal commands from the project root:
+```
+cd client
+touch .env.local
+```
+Then add the following variables to this file:
+
 (/client/.env.local)
-	```env
-	VITE_API_URL=http://localhost:9090/api
-	VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
-	```
+```env
+VITE_API_URL=http://localhost:9090/api
+VITE_STRIPE_PUBLIC_KEY=your_stripe_public_key
+```
+
+Again, You can directly copy and paste this block into the .env file, just ensure that you replace the Stripe placeholder value with your own Stripe Public Key.
 
 add `.env.*` to your client/.gitignore file  
 
 NOTE: this app is set to listen on port 9090. If you wish to use a different port, ensure you add '/api' to the end of your VITE_API_URL variable and also update the PORT variable in server/listen.js 
 
-4. ### Database setup (local Postgres)
+ ### 4. Database setup (local Postgres)
    Make sure PostgreSQL is running locally, then run the following commands from /server:
    ```
    npm run setup-dbs
@@ -130,29 +153,29 @@ NOTE: this app is set to listen on port 9090. If you wish to use a different por
    seed populates them with sample users, events, and signups.
 
 
-6. ### Start the app
-Run both the server and client in separate terminals:
+ ### 5. Start the app
+Run both the server and client in separate terminals windows:
 
 Terminal 1 – backend
 from the project root (/film-club), run the following commands:
-	```
+```
 	cd server
 	npm run dev
-	```
+```
 Terminal 2 – frontend
 in the second terminal, from the root, run the following commands:
-	```
+```
 	cd client
 	npm run dev
-	```
+```
 Then open http://localhost:5173
 
 🧪 Testing
 To run automated backend tests:
-	```
+```
 	cd server
 	npm test
-	```
+```
 Seeds the test database automatically
 Runs Jest integration tests for database and API endpoints
 
