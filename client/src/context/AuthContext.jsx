@@ -1,5 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 import { postLogin } from "../api/postLogin";
+import { postRegister } from "../api/postRegister";
 import { useContext } from "react";
 
 export const AuthContext = createContext();
