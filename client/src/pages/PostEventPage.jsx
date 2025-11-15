@@ -25,6 +25,18 @@ function PostEventPage() {
     setError(null);
     setSuccess(false);
 
+    const eventDate = new Date(formData.date);
+    const today = new Date();
+
+    today.setHours(0, 0, 0, 0);
+    eventDate.setHours(0, 0, 0, 0);
+
+    if (eventDate < today) {
+      setError("Events cannot be in the past");
+      setLoading(false);
+      return Promise.reject("Invalid date");
+    }
+
     return postEvent(formData, token)
       .then(() => {
         setSuccess(true);

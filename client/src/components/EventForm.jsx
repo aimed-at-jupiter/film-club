@@ -218,6 +218,9 @@ function EventForm({ onSubmit, loading, success }) {
             onChange={handleChange}
             required={!["film_img_url", "price"].includes(key)}
             disabled={loading || success}
+            {...(key === "date"
+              ? { min: new Date().toISOString().split("T")[0] }
+              : {})}
           />
         </div>
       ))}

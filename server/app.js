@@ -49,6 +49,8 @@ app.get("/api/omdb", requireAuth, requireStaff, getOmdbData);
 
 app.post("/api/create-checkout-session", requireAuth, postStripeSession);
 
+// app.delete("/api/events/:event_id", requireAuth, requireStaff);
+
 // custom errors from models
 app.use((err, request, response, next) => {
   if (err.status && err.msg) {
