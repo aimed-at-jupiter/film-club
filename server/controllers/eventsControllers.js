@@ -58,6 +58,16 @@ const postEvent = (request, response, next) => {
   ) {
     return response.status(400).send({ msg: "Missing required fields" });
   }
+  const eventDate = new Date(date);
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  eventDate.setHours(0, 0, 0, 0);
+
+  if (eventDate < today) {
+    return response
+      .status(400)
+      .json({ msg: "Events cannot be scheduled in the past" });
+  }
 
   if (!["discussion", "screening"].includes(event_type)) {
     return response.status(400).send({ msg: "Invalid event type" });
