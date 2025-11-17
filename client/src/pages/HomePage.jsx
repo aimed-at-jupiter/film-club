@@ -69,7 +69,7 @@ function HomePage() {
           role="status"
           aria-label="Loading events"
         ></div>
-        <p className="mt-3">Loading events, please wait…</p>
+        <p className=" text-center mt-3">Loading events, please wait…</p>
       </div>
     );
 

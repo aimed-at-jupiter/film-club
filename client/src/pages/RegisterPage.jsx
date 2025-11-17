@@ -13,19 +13,23 @@ function RegisterPage() {
 
   return (
     <main className="container mt-5" role="main">
-      <h2 className="text-center mb-4" tabIndex="-1" aria-live="polite">
-        Register
-      </h2>
-      <RegisterForm onSubmit={registerUser} loading={loading} />
-      {authError && (
-        <div
-          className="alert alert-danger mt-3 text-center"
-          role="alert"
-          aria-live="assertive"
-        >
-          {authError}
+      <div className="rowcol-12 d-flex justify-content-center">
+        <div className="register-form-wrapper">
+          <h2 className="text-center mb-4" tabIndex="-1" aria-live="polite">
+            Register
+          </h2>
+          <RegisterForm onSubmit={registerUser} loading={loading} />
+          {authError && (
+            <div
+              className="alert alert-danger mt-3 text-center"
+              role="alert"
+              aria-live="assertive"
+            >
+              {authError}
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </main>
   );
 }

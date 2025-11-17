@@ -1,8 +1,6 @@
 #root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  width: 100%;
+  padding: 0;
 }
 
 .logo {
@@ -33,10 +31,20 @@
   }
 }
 
-.card {
+/* .card {
   padding: 2em;
-}
+} */
 
 .read-the-docs {
   color: #888;
+}
+
+.login-form-wrapper {
+  width: 100%;
+  max-width: 380px; /* you can adjust this (360–420px works great) */
+}
+
+.register-form-wrapper {
+  width: 100%;
+  max-width: 380px; /* you can adjust this (360–420px works great) */
 }
