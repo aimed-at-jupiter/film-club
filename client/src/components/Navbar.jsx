@@ -47,95 +47,103 @@ function Navbar() {
           className={`collapse navbar-collapse${isOpen ? " show" : ""}`}
           id="navbarNavAltMarkup"
         >
-          <ul className="navbar-nav me-auto">
-            <li className="nav-item">
-              <button
-                className={`btn btn-link nav-link ${
-                  filter === "all" ? "fw-bold" : ""
-                }`}
-                onClick={() => handleFilterClick("all")}
-              >
-                All Events
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`btn btn-link nav-link ${
-                  filter === "screening" ? "fw-bold" : ""
-                }`}
-                onClick={() => handleFilterClick("screening")}
-              >
-                Screenings
-              </button>
-            </li>
-            <li className="nav-item">
-              <button
-                className={`btn btn-link nav-link ${
-                  filter === "discussion" ? "fw-bold" : ""
-                }`}
-                onClick={() => handleFilterClick("discussion")}
-              >
-                Discussions
-              </button>
-            </li>
-
-            {user && user.role === "staff" && (
+          <div className="d-flex w-100 justify-content-between flex-column flex-md-row">
+            <ul className="navbar-nav">
               <li className="nav-item">
-                <Link
-                  className="nav-link"
-                  to="/create-event"
-                  onClick={closeNavbar}
+                <button
+                  className={`btn btn-link nav-link ${
+                    filter === "all" ? "fw-bold" : ""
+                  }`}
+                  onClick={() => handleFilterClick("all")}
                 >
-                  Create Event
-                </Link>
+                  All Events
+                </button>
               </li>
-            )}
-          </ul>
+              <li className="nav-item">
+                <button
+                  className={`btn btn-link nav-link ${
+                    filter === "screening" ? "fw-bold" : ""
+                  }`}
+                  onClick={() => handleFilterClick("screening")}
+                >
+                  Screenings
+                </button>
+              </li>
+              <li className="nav-item">
+                <button
+                  className={`btn btn-link nav-link ${
+                    filter === "discussion" ? "fw-bold" : ""
+                  }`}
+                  onClick={() => handleFilterClick("discussion")}
+                >
+                  Discussions
+                </button>
+              </li>
 
-          <ul className="navbar-nav ms-auto">
-            {user ? (
-              <>
-                <span className="navbar-text me-2"> {user.username} </span>
+              {user && user.role === "staff" && (
                 <li className="nav-item">
                   <Link
                     className="nav-link"
-                    to="/my-events"
+                    to="/create-event"
                     onClick={closeNavbar}
                   >
-                    My Events
+                    Create Event
                   </Link>
                 </li>
-                <li className="nav-item">
-                  <button
-                    className="btn btn-light"
-                    onClick={() => {
-                      logoutUser();
-                      closeNavbar();
-                    }}
-                  >
-                    Logout
-                  </button>
-                </li>
-              </>
-            ) : (
-              <>
-                <li className="nav-item">
-                  <Link className="nav-link" to="/login" onClick={closeNavbar}>
-                    Login
-                  </Link>
-                </li>
-                <li className="nav-item">
-                  <Link
-                    className="nav-link"
-                    to="/register"
-                    onClick={closeNavbar}
-                  >
-                    Register
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
+              )}
+            </ul>
+
+            <ul className="navbar-nav ms-auto text-center">
+              {user ? (
+                <>
+                  <li className="nav-item">
+                    <span className="navbar-text"> {user.username} </span>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link"
+                      to="/my-events"
+                      onClick={closeNavbar}
+                    >
+                      My Events
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <button
+                      className="btn btn-light"
+                      onClick={() => {
+                        logoutUser();
+                        closeNavbar();
+                      }}
+                    >
+                      Logout
+                    </button>
+                  </li>
+                </>
+              ) : (
+                <>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link"
+                      to="/login"
+                      onClick={closeNavbar}
+                    >
+                      Login
+                    </Link>
+                  </li>
+                  <li className="nav-item">
+                    <Link
+                      className="nav-link"
+                      to="/register"
+                      onClick={closeNavbar}
+                    >
+                      Register
+                    </Link>
+                  </li>
+                </>
+              )}
+            </ul>
+          </div>
         </div>
       </div>
     </nav>
