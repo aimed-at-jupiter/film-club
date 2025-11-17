@@ -99,7 +99,7 @@ function DetailedEventCard({ event, userSignups, setUserSignups }) {
       role="region"
       aria-label={`Details for ${event.film_title}`}
     >
-      <div className="row g-0">
+      <div className="row g-5">
         <div className="col-md-4">
           <img
             src={event.film_img_url}
