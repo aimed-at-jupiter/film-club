@@ -10,6 +10,8 @@ import MyEventsPage from "./pages/MyEventsPage";
 import PostEventPage from "./pages/PostEventPage";
 import PaymentSuccess from "./pages/PaymentSuccess";
 import PaymentCancelled from "./pages/PaymentCancelled";
+import NotFound from "./pages/NotFound";
+
 import { Tooltip } from "bootstrap";
 import { EventFilterProvider } from "./context/EventFilterContext";
 import { AuthProvider } from "./context/AuthContext";
@@ -37,6 +39,7 @@ function App() {
           <Route path="/payment-success" element={<PaymentSuccess />} />
           <Route path="/payment-cancelled" element={<PaymentCancelled />} />
           <Route path="/create-event" element={<PostEventPage />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </EventFilterProvider>
     </AuthProvider>
