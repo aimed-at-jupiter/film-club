@@ -92,6 +92,7 @@ function HomePage() {
           ? `Welcome back, ${user.username || user.email}!`
           : "Welcome to Film Club!"}
       </h3>
+      <p className="mb-3 text-center">Upcoming events</p>
 
       <div className="row" aria-label="List of upcoming events">
         {filteredEvents.map((event) => (
